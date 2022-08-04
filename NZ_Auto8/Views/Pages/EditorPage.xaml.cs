@@ -26,5 +26,9 @@ namespace NZ_Auto8.Views.Pages
             InitializeComponent();
             DataContext = vm;
         }
+
+        
+
+
     }
 }

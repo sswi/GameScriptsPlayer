@@ -84,7 +84,7 @@
             <controls:KeyboardView/>
             <controls:DelayView/>
             <controls:MouseView Margin="20,0,0,0"/>
-            <controls:FindPicView/>
+                                           <controls:FindPicView/>
             <controls:JumView/>
             <controls:FindPicClickView/>
             </StackPanel>

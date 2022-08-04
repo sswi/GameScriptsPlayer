@@ -2,6 +2,7 @@
 using NZ_Auto8.Handlers;
 using NZ_Auto8.Models;
 using NZ_Auto8.Services;
+using NZ_Auto8.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -114,6 +115,8 @@ namespace NZ_Auto8.ViewModels
                     //设置鼠标速度=10
                     _dm.SetMouseSpeed(10);
 
+
+                    //脚本运行
                     for (int i = startIndex; i < Scripts.Count; i++)
                     {
                         //是否运行，用于接受中途停止
@@ -142,7 +145,6 @@ namespace NZ_Auto8.ViewModels
                         //当前步数结束后等待延迟
                         Thread.Sleep(Scripts[i].EndWaitTime);
                     }
-
 
                     //脚本运行结束 
                     IsRun = false;
@@ -186,6 +188,8 @@ namespace NZ_Auto8.ViewModels
             {
                 //清除掉无用的属性               
                 //插入到所选位置的前边
+                step.Index = _SelectIndex;
+                RestJumpIndex("insert", step);
                 Scripts.Insert(_SelectIndex, DleteNotNeedProperty(step));
             }
             else
@@ -211,9 +215,96 @@ namespace NZ_Auto8.ViewModels
         //删除指定行
         public Command DeleteStepCommand => new ((object o) => 
         {
-            Scripts.Remove((Step)o);
+            var s = (Step)o;
+            RestJumpIndex("Remove", s);
+            //删除步
+            Scripts.Remove(s);
             RestStartIndexList();
         });
+
+
+
+
+        /// <summary>
+        /// 删除、插入行后跳转重新指向
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="step"></param>
+        private void RestJumpIndex(string mode,Step s)
+        {
+            if (mode == "Remove")
+            {
+                //更新跳转步
+                for (int i = s.Index; i < Scripts.Count; i++)
+                {
+                    if (Scripts[i].Mode == EventMode.Jump)
+                    {
+                        if (Scripts[i].Jump.JumToIndex != -1 && Scripts[i].Jump.JumToIndex > s.Index)
+                        {
+                            Scripts[i].Jump.JumToIndex--;
+                        }
+                    }
+                    else if (Scripts[i].Mode == EventMode.FindPicture || Scripts[i].Mode == EventMode.FindPictureClick)
+                    {
+                        if (Scripts[i].Picture.HasFoundJumToIndex != -1 && Scripts[i].Picture.HasFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Picture.HasFoundJumToIndex--;
+                        }
+                        if (Scripts[i].Picture.NotFoundJumToIndex != -1 && Scripts[i].Picture.NotFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Picture.NotFoundJumToIndex--;
+                        }
+                    }
+                    else if (Scripts[i].Mode == EventMode.FindColor)
+                    {
+                        if (Scripts[i].Color.NotFoundJumToIndex != -1 && Scripts[i].Color.NotFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Color.NotFoundJumToIndex--;
+                        }
+                        if (Scripts[i].Color.HasFoundJumToIndex != -1 && Scripts[i].Color.HasFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Color.HasFoundJumToIndex--;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = s.Index; i < Scripts.Count; i++)
+                {
+                    if (Scripts[i].Mode == EventMode.Jump)
+                    {
+                        if (Scripts[i].Jump.JumToIndex != -1 && Scripts[i].Jump.JumToIndex > s.Index)
+                        {
+                            Scripts[i].Jump.JumToIndex++;
+                        }
+                    }
+                    else if (Scripts[i].Mode == EventMode.FindPicture || Scripts[i].Mode == EventMode.FindPictureClick)
+                    {
+                        if (Scripts[i].Picture.HasFoundJumToIndex != -1 && Scripts[i].Picture.HasFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Picture.HasFoundJumToIndex++;
+                        }
+                        if (Scripts[i].Picture.NotFoundJumToIndex != -1 && Scripts[i].Picture.NotFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Picture.NotFoundJumToIndex++;
+                        }
+                    }
+                    else if (Scripts[i].Mode == EventMode.FindColor)
+                    {
+                        if (Scripts[i].Color.NotFoundJumToIndex != -1 && Scripts[i].Color.NotFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Color.NotFoundJumToIndex++;
+                        }
+                        if (Scripts[i].Color.HasFoundJumToIndex != -1 && Scripts[i].Color.HasFoundJumToIndex > s.Index)
+                        {
+                            Scripts[i].Color.HasFoundJumToIndex++;
+                        }
+                    }
+                }
+
+            }
+        }
 
         //编号重新排序
         private void RestStartIndexList()
@@ -224,6 +315,18 @@ namespace NZ_Auto8.ViewModels
             }
 
         }
+
+        //弹出调试窗口
+
+        public Command ShowMessageWindowCommand => new (() => 
+        {
+        
+        
+        
+        });
+
+
+
 
         //导入本地脚本文件
         public Command LoadScriptsCommand => new (() =>

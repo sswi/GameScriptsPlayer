@@ -35,14 +35,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="XE.Commands">
-      <HintPath>..\..\..\..\XE.Commands.dll</HintPath>
-    </Reference>
+    <Folder Include="Dto\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
-    <Folder Include="Resources\" />
+    <Reference Include="XE.Commands">
+      <HintPath>E:\XE.Commands.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

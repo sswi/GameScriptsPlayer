@@ -1,0 +1,33 @@
+﻿<Application x:Class="NZ_Auto8.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:NZ_Auto8"        
+             xmlns:converter="clr-namespace:NZ_Auto8.Converters"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"             
+             Exit="OnExit"
+             Startup="OnStartup"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>                
+                <ui:ControlsDictionary />
+                <ui:ThemesDictionary Theme="Dark" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!--转换器-->
+            <converter:IntToEventMode x:Key="IntToEventMode"/>
+            <converter:IntToKeyboardMode x:Key="IntToKeyboardMode"/>
+            <converter:EventModeToVisibility x:Key="EventModeToVisibility"/>
+            <converter:IntToMouseMode x:Key="IntToMouseMode"/>
+            <converter:MouseModeToVisibility x:Key="MouseModeToVisibility"/>
+            <converter:EventModeToString x:Key="EventModeToString"/>
+
+            <Style TargetType="Border" x:Key="XBorderStyle">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

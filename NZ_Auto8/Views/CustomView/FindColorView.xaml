@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="NZ_Auto8.Views.CustomView.FindColorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NZ_Auto8.Views.CustomView"
+             mc:Ignorable="d" 
+             xmlns:models="clr-namespace:NZ_Auto8.Models" 
+             d:DataContext="{d:DesignInstance Type=models:Step}"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             d:DesignHeight="450" d:DesignWidth="800"  Visibility="{Binding Mode,Converter={StaticResource EventModeToVisibility},ConverterParameter=6}">
+    <!--限时找色-->
+    <Grid  Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="颜色值: " VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <ui:TextBox  Text="{Binding Color.Color,Mode=TwoWay}"  Grid.Column="1" Cursor="IBeam" Width="200" />
+            <TextBlock Text="相似度:"  VerticalAlignment="Center" Margin="10,0"/>
+            <TextBox  Width="150" Text="{Binding Color.Similarity,Mode=TwoWay}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10">
+            <TextBlock Text="范围:  X1:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox Width="70" Text="{Binding Color.StartPoint.X,Mode=TwoWay}"/>
+            <TextBlock Text="Y1:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox Width="70" Text="{Binding Color.StartPoint.Y,Mode=TwoWay}"/>
+            <TextBlock Text="X2:" VerticalAlignment="Center" Margin="15,0,5,0"/>
+            <TextBox Width="70"  Text="{Binding Color.EndPoint.X,Mode=TwoWay}"/>
+            <TextBlock Text="Y2:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox Width="70" Text="{Binding Color.EndPoint.Y,Mode=TwoWay}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock Text="超时时间:" VerticalAlignment="Center"  Margin="0,0,5,0"/>
+            <ui:NumberBox Width="170"  IntegersOnly="True" Min="16" Step="100" Icon="Clock12"   Text="{Binding Color.TimeOut,Mode=TwoWay}"/>
+            <TextBlock Text="找到跳至:" VerticalAlignment="Center"  Margin="15,0,5,0"/>
+            <TextBox Width="80" Text="{Binding Color.HasFoundJumToIndex,Mode=TwoWay}"/>
+            <TextBlock Text="未找到跳至:" VerticalAlignment="Center"  Margin="15,0,5,0"/>
+            <TextBox Width="80" Text="{Binding Color.NotFoundJumToIndex,Mode=TwoWay}"/>
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

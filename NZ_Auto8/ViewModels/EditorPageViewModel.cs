@@ -85,7 +85,7 @@ namespace NZ_Auto8.ViewModels
         public ObservableCollection<Step> Scripts { get; set; } = new();
 
 
-        public List<string> EventNames { get; set; } = new() { "键盘事件", "鼠标事件", "延迟事件", "限时找图", "跳转语句", "找图点击", "限时找色", "文本输入","随机延迟等待", "按键复归" };
+        public List<string> EventNames { get; set; } = new() { "键盘事件", "鼠标事件", "延迟事件", "限时找图", "跳转语句", "找图点击", "限时找色", "文本输入","随机延迟等待", "按键复归","关机","结束进程" };
 
 
         //调试按钮状态
@@ -433,7 +433,8 @@ namespace NZ_Auto8.ViewModels
                     step.Picture = null;
                     step.Color = null;
                     step.InputText = null;
-                    step.RandomDelay = null;                    
+                    step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.Mouse:
                     step.Keyboard = null;
@@ -443,6 +444,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.Sleep:
                     step.Keyboard = null;
@@ -452,6 +454,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.FindPicture:
                     step.Keyboard = null;
@@ -461,6 +464,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.Jump:
                     step.Keyboard = null;
@@ -470,6 +474,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.FindPictureClick:
                     step.Keyboard = null;
@@ -479,6 +484,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.FindColor:
                     step.Keyboard = null;
@@ -488,6 +494,7 @@ namespace NZ_Auto8.ViewModels
                     // step.Color = null;
                     step.InputText = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     break;
                 case EventMode.Input:
                     step.Keyboard = null;
@@ -496,6 +503,7 @@ namespace NZ_Auto8.ViewModels
                     step.Picture = null;
                     step.Color = null;
                     step.RandomDelay = null;
+                    step.KillApp = null;
                     //step.InputText = null;
                     break;
                 case EventMode.RandomDelay:
@@ -504,6 +512,7 @@ namespace NZ_Auto8.ViewModels
                     step.Jump = null;
                     step.Picture = null;
                     step.Color = null;
+                    step.KillApp = null;
                     //step.InputText = null;
                     break;
                 case EventMode.KeyboardReverted:
@@ -512,10 +521,20 @@ namespace NZ_Auto8.ViewModels
                     step.Jump = null;
                     step.Picture = null;
                     step.Color = null;
-                    step.RandomDelay = null;                    
+                    step.RandomDelay = null;
+                    step.KillApp = null;
                     //step.InputText = null;
                     break;
-
+                case EventMode.KillApp:
+                    step.Keyboard = null;
+                    step.Mouse = null;
+                    step.Jump = null;
+                    step.Picture = null;
+                    step.Color = null;
+                    step.RandomDelay = null;                    
+                   // step.KillApp = null;
+                    //step.InputText = null;
+                    break;
 
             }
             return step;

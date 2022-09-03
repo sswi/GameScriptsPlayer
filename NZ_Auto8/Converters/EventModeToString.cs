@@ -26,6 +26,8 @@ namespace NZ_Auto8.Converters
                 EventMode.Input => "文本输入",
                 EventMode.RandomDelay => "随机延迟等待",
                 EventMode.KeyboardReverted=>"按键复归",
+                EventMode.ShutDown => "关机",
+                EventMode.KillApp => "结束进程",
                 _ => "未知步骤",
             };
         }

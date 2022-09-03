@@ -92,60 +92,74 @@
             <controls:InputTextView/>
             <controls:RandomDelayView/>
             <controls:KeyboardRevertedView/>
+           <controls:ShutdownView/>
+           <controls:KillAppView/>
             </StackPanel>
         </Grid>
         
 <!--显示列表-->
         <Border Grid.Row="4" Padding="5" Margin="20,10,20,0" Style="{StaticResource XBorderStyle}">
-        <ListView  ItemsSource="{Binding Scripts}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
+        <ListView   ItemsSource="{Binding Scripts}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource XBorderStyle}" Padding="10">
-                        <Grid>
-                        <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition />
-                                    <RowDefinition Height="auto"/>                                                            
-                                </Grid.RowDefinitions>                            
-                            
-                                <StackPanel Orientation="Horizontal" >
-                                    <Border  Background="{DynamicResource ControlFillColorDefaultBrush}"  CornerRadius="20" Width="40" Height="40" BorderThickness="1" BorderBrush="{DynamicResource ControlElevationBorderBrush}">
-                                        <TextBlock Text="{Binding Index}"   FontWeight="Bold"  FontSize="11"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </Border>
-                                    <TextBlock d:Text="找颜色" Text="{Binding Mode,Converter={StaticResource EventModeToString}}" Foreground="LightCoral" FontSize="15" VerticalAlignment="Center"  Margin="20,0,0,0"/>
-                                </StackPanel>
-
-                                <Grid Grid.Row="1">
+                        <ui:CardExpander>
+                            <ui:CardExpander.Header>
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="200"/>
                                         <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="标记："  VerticalAlignment="Center" Margin="0,0,15,0" Foreground="HotPink" />
-                                    <ui:TextBox  Grid.Column="1"  Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"/>
+                                    <!--操作类型-->
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Border  Background="{DynamicResource ControlFillColorDefaultBrush}"  CornerRadius="20" Width="40" Height="40" BorderThickness="1" BorderBrush="{DynamicResource ControlElevationBorderBrush}">
+                                            <TextBlock Text="{Binding Index}"   FontWeight="Bold"  FontSize="11"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <TextBlock d:Text="找颜色" Text="{Binding Mode,Converter={StaticResource EventModeToString}}" Foreground="#a07ff5" FontSize="15" VerticalAlignment="Center"  Margin="20,0,0,0"/>
+                                    </StackPanel>
+                                    <!--标记名称-->
+                                    <Grid Grid.Column="1"  Margin="35,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="标记："  VerticalAlignment="Center" Margin="0,0,5,0" />
+                                        <ui:TextBox  Grid.Column="1"  Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"/>
+                                    </Grid>
+                                    <!--起点、结束点-->
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="2">
+                                        <!--设为起点按钮-->
+                                        <ui:Button Content="起" Foreground="YellowGreen" Command="{Binding ElementName=editorPage,Path= DataContext.SetStartIndexCommand}" CommandParameter="{Binding .}" FontSize="10" Width=" 35" Height="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        <!--删除按钮-->
+                                        <ui:Button Content="×" Foreground="Red" Command="{Binding ElementName=editorPage,Path=DataContext.DeleteStepCommand}"  CommandParameter="{Binding .}" FontSize="10" Width=" 35" Height="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Margin="5,0,20,0"/>
+
+                                    </StackPanel>
+
                                 </Grid>
-                            
-                                <!--设为起点按钮-->
-                                <ui:Button Content="起" Foreground="YellowGreen" Command="{Binding ElementName=editorPage,Path= DataContext.SetStartIndexCommand}" CommandParameter="{Binding .}" FontSize="10" Width=" 35" Height="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,5,50,5"/>
-                                <!--删除按钮-->
-                                <ui:Button Content="×" Foreground="Red" Command="{Binding ElementName=editorPage,Path=DataContext.DeleteStepCommand}"  CommandParameter="{Binding .}" FontSize="10" Width=" 35" Height="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
-                              
-                            
-                            
-                            <Grid Grid.Row="2" Margin="0,10,0,0">
+
+                            </ui:CardExpander.Header>
+
+                            <Grid  Margin="0,10,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
                                 <controls:KeyboardView/>
                                 <controls:DelayView/>
                                 <controls:MouseView />
                                 <controls:FindPicView/>
                                 <controls:JumView/>
-                                <controls:FindPicClickView/>                      
+                                <controls:FindPicClickView/>
                                 <controls:FindColorView/>
                                 <controls:InputTextView/>
                                 <controls:RandomDelayView/>
                                 <controls:KeyboardRevertedView/>
-                                </Grid>
+                                <controls:ShutdownView/>
+                                <controls:KillAppView/>
 
-                             <Grid Grid.Row="3">
+
+
+                                <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
@@ -156,10 +170,10 @@
                                     <ui:TextBox Grid.Column="1"  Width="200" Text="{Binding EndWaitTime,Mode=TwoWay}"  Margin="0,10"/>
                                     <ui:TextBox Icon="ColorLine20" Grid.Column="3" Text="{Binding Remark,Mode=TwoWay}" PlaceholderText="注释"/>
                                 </Grid>
+                            </Grid>
 
-                              
-                        </Grid>
-                    </Border>
+
+                        </ui:CardExpander>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

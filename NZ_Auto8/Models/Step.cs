@@ -145,9 +145,6 @@ namespace NZ_Auto8.Models
 
 
 
-
-
-
         private RandomDelay randomDelay=new RandomDelay();
         /// <summary>
         /// 随机延迟
@@ -156,6 +153,17 @@ namespace NZ_Auto8.Models
         {
             get { return randomDelay; }
             set { randomDelay = value; }
+        }
+
+
+        private CloseAppEvent killApp=new CloseAppEvent();
+        /// <summary>
+        /// 结束进程
+        /// </summary>
+        public CloseAppEvent KillApp
+        {
+            get { return killApp; }
+            set { killApp = value; OnPropertyChanged(); }
         }
 
 
@@ -213,6 +221,14 @@ namespace NZ_Auto8.Models
         /// <summary>
         /// 按键复归
         /// </summary>
-        KeyboardReverted=9
+        KeyboardReverted=9,
+        /// <summary>
+        /// 关机
+        /// </summary>
+        ShutDown=10,
+        /// <summary>
+        /// 结束进程
+        /// </summary>
+        KillApp=11
     }
 }

@@ -3,10 +3,12 @@ using NZ_Auto8.DM;
 using NZ_Auto8.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace NZ_Auto8.Handlers
 {
@@ -73,6 +75,18 @@ namespace NZ_Auto8.Handlers
                 case EventMode.KeyboardReverted:
                     KeyCharManage.RestKeyState(_dm);
                     return -1;
+
+                case EventMode.ShutDown:
+                    Process.Start("C:/Windows/System32/shutdown.exe", "-s -t 0 ");
+                    return -1;
+
+                case EventMode.KillApp:
+                    if (step.KillApp.IsCheck )
+                    {
+                        KillApp(step);
+                    }                   
+                    return -1;
+
             }
             return -1;
         }
@@ -82,6 +96,32 @@ namespace NZ_Auto8.Handlers
 
 
 
+        /// <summary>
+        /// 结束进程
+        /// </summary>
+        /// <param name="step"></param>
+        private static void KillApp(Step step)
+        {
+            try
+            {
+                Process[] processes = Process.GetProcesses();
+                foreach (var item in processes)
+                {
+#if DEBUG
+                    Debug.WriteLine(item.ProcessName);
+#endif
+                    if (item.ProcessName==step.KillApp.ProcessName)
+                    {
+                        item.Kill();
+                    }
+                }
+            }
+            catch 
+            {               
+
+            }       
+        
+        }
 
 
 

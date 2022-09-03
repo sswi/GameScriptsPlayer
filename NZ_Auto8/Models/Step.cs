@@ -10,16 +10,21 @@ namespace NZ_Auto8.Models
     public class Step:BindableBase
     {
 
-        //索引
+
         private int index = 0;
+        /// <summary>
+        /// 索引
+        /// </summary>
         public int Index
         {
             get { return index; }
             set { index = value; OnPropertyChanged(); }
         }
 
-        //操作类型
         private EventMode mode=0;
+        /// <summary>
+        /// 操作类型
+        /// </summary>
         public EventMode Mode
         {
             get { return mode; }
@@ -32,8 +37,11 @@ namespace NZ_Auto8.Models
 
 
 
-        //键盘事件
+       
         private KeyboardEvent keyboard =new();
+        /// <summary>
+        /// 键盘事件
+        /// </summary>
         public KeyboardEvent Keyboard
         {
             get { return keyboard; }
@@ -41,8 +49,10 @@ namespace NZ_Auto8.Models
         }
 
 
-        //鼠标事件
         private MouseEvent mouse = new();
+        /// <summary>
+        /// 鼠标事件
+        /// </summary>
         public MouseEvent Mouse
         {
             get { return mouse; }
@@ -50,16 +60,22 @@ namespace NZ_Auto8.Models
         }
 
 
-        //结束后等待时间
+
         private int endWaitTime=65;
+        /// <summary>
+        /// 结束后等待时间
+        /// </summary>
         public int EndWaitTime
         {
             get { return endWaitTime; }
             set { endWaitTime = value;OnPropertyChanged(); }
         }
 
-        //跳转
+
         private JumpEvent jump = new();
+        /// <summary>
+        /// 跳转
+        /// </summary>
         public JumpEvent Jump
         {
             get { return jump; }
@@ -67,8 +83,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //找图
+
         private PictureEvent picture = new();
+        /// <summary>
+        /// 找图
+        /// </summary>
         public PictureEvent Picture
         {
             get { return picture; }
@@ -76,8 +95,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //找色
+
         private ColorEvent? color = new();
+        /// <summary>
+        /// 找色
+        /// </summary>
         public ColorEvent? Color
         {
             get { return color; }
@@ -85,8 +107,10 @@ namespace NZ_Auto8.Models
         }
 
 
-        //备注
         private string remark;
+        /// <summary>
+        /// 备注
+        /// </summary>
         public string Remark
         {
             get { return remark; }
@@ -94,8 +118,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //输入文本
+        
         private string inputText;
+        /// <summary>
+        /// 输入文本
+        /// </summary>
         public string InputText
         {
             get { return inputText; }
@@ -103,18 +130,89 @@ namespace NZ_Auto8.Models
         }
 
 
+
+
+
+        private string tag;
+        /// <summary>
+        /// 跳转目标标记
+        /// </summary>
+        public string JumTargetTag
+        {
+            get { return tag; }
+            set { tag = value; OnPropertyChanged(); }
+        }
+
+
+
+
+
+
+        private RandomDelay randomDelay=new RandomDelay();
+        /// <summary>
+        /// 随机延迟
+        /// </summary>
+        public RandomDelay RandomDelay
+        {
+            get { return randomDelay; }
+            set { randomDelay = value; }
+        }
+
+
+
+
     }
+
+
+
+
+
+
+
+
 
 
     public enum EventMode
     {
+        /// <summary>
+        /// 键盘操作
+        /// </summary>
         Keyboard = 0,
+        /// <summary>
+        /// 鼠标操作
+        /// </summary>
         Mouse = 1,
+        /// <summary>
+        /// 延迟等待
+        /// </summary>
         Sleep = 2,
+        /// <summary>
+        /// 找图跳转操作
+        /// </summary>
         FindPicture = 3,
+        /// <summary>
+        /// 跳转
+        /// </summary>
         Jump = 4,
+        /// <summary>
+        /// 找图并点击
+        /// </summary>
         FindPictureClick = 5,
+        /// <summary>
+        /// 找色跳转操作
+        /// </summary>
         FindColor = 6,
-        Input=7
+        /// <summary>
+        /// 文本输入
+        /// </summary>
+        Input=7,
+        /// <summary>
+        /// 随机延迟等待
+        /// </summary>
+        RandomDelay=8,
+        /// <summary>
+        /// 按键复归
+        /// </summary>
+        KeyboardReverted=9
     }
 }

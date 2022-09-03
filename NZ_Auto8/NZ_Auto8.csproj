@@ -9,6 +9,11 @@
     <Platforms>AnyCPU;x86</Platforms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>wpfui.ico</ApplicationIcon>
+    <Authors>aab</Authors>
+    <Company>xe</Company>
+    <Product>xe</Product>
+    <Copyright>xe</Copyright>
+    <AssemblyName>ABCDE</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,13 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="XE.Commands">
-      <HintPath>E:\XE.Commands.dll</HintPath>
+      <HintPath>..\..\..\..\XE.Commands.dll</HintPath>
     </Reference>
   </ItemGroup>
 

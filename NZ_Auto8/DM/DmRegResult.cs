@@ -21,7 +21,7 @@ namespace NZ_Auto8.DM
         new DmRegResult(){ ReturnCode=1,ReturnMsg="成功" },
         new DmRegResult(){ ReturnCode=2,ReturnMsg="余额不足" },
         new DmRegResult(){ ReturnCode=3,ReturnMsg="绑定了本机器，但是账户余额不足50元" },
-        new DmRegResult(){ ReturnCode=4,ReturnMsg="注册码错误" },
+        new DmRegResult(){ ReturnCode=4,ReturnMsg="插件注册码错误" },
         new DmRegResult(){ ReturnCode=5,ReturnMsg="你的机器或者IP在黑名单列表中或者不在白名单列表中" },
         new DmRegResult(){ ReturnCode=6,ReturnMsg="非法使用插件" },
         new DmRegResult(){ ReturnCode=7,ReturnMsg="你的帐号因为非法使用被封禁. （如果是在虚拟机中使用插件，必须使用Reg或者RegEx，不能使用RegNoMac或者RegExNoMac,否则可能会造成封号，或者封禁机器）" },

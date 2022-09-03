@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="NZ_Auto8.Views.CustomView.KeyboardRevertedView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NZ_Auto8.Views.CustomView"
+             mc:Ignorable="d" 
+             xmlns:models="clr-namespace:NZ_Auto8.Models" 
+             d:DataContext="{d:DesignInstance Type=models:Step}"
+             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding Mode,Converter={StaticResource EventModeToVisibility},ConverterParameter=9}">
+    
+    
+    <Grid>
+        <Border BorderThickness="1" BorderBrush="Aqua" CornerRadius="5" Padding="0,15">
+            <TextBlock Text="将所有按键状态为“按下”的键恢复为“弹起”，避免卡键" Margin="20,0" FontSize="15"/>
+        </Border>
+
+    </Grid>
+</UserControl>

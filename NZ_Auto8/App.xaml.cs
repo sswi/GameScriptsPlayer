@@ -65,15 +65,43 @@ namespace NZ_Auto8
             //远程注册大漠，大漠插件的收费验证，莫得办法，要么缴费，要么找破解版
             _ = Task.Run(() =>
             {
+
                 var x = RegisterDmSoft.RegisterDmSoftDll();
                 var _dm = _host.Services.GetRequiredService<DmSoft>();
-                var result= _dm.Reg(DmConfig.DmRegCode, DmConfig.DmVerInfo);
+
+                //大漠注册码验证结果，随便设置一个初始值
+                int result = 10086;
+
+                //判断是否有本地验证码
+                var fileName = Directory.GetCurrentDirectory() + "\\RegKey.txt";
+                if (File.Exists(fileName))
+                {
+                    var keyconfig = File.ReadAllText(Directory.GetCurrentDirectory() + "\\RegKey.txt");
+                    if (keyconfig != null)
+                    {                  
+                        var ks=keyconfig.Split("\r\n");
+                        if (ks.Length >= 2)
+                        {
+                            result = _dm.Reg(ks[0], ks[1]);
+                        }
+                    }
+                }
+
+                //如果本地注册码为空，则验证内置的
+                if (result==10086)
+                {
+                    result = _dm.Reg(DmConfig.DmRegCode, DmConfig.DmVerInfo);
+                }
+             
+    
+                 
 
                 //判断联网注册是否成功 不等于1则注册失败，弹出失败信息
                 if (result!=1)
                 {
                   var msg=  DmRegResult.RegResults.FindLast(r => result == r.ReturnCode);
                   System.Windows.MessageBox.Show(msg.ReturnMsg);
+                  return;
                 }
 
                 Debug.WriteLine($"注册码返回信息：{result}");

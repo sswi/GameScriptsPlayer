@@ -10,16 +10,24 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding Mode,Converter={StaticResource EventModeToVisibility},ConverterParameter=4}">
     <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="跳转到第几步:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-        <ui:NumberBox IntegersOnly="True" Min="0" Step="1"   Text="{Binding Jump.JumToIndex,Mode=TwoWay}"    Grid.Column="1" Cursor="IBeam"  />
-        <TextBlock Grid.Column="2" Text="循环次数:" VerticalAlignment="Center" Margin="15,0,5,0"/>
-        <ui:NumberBox Grid.Column="3" IntegersOnly="True" Min="1" Step="1"   Text="{Binding Jump.NumberOfCycles,Mode=TwoWay}"   Cursor="IBeam"  />
+        
+        <TextBlock  Text="跳转目标标记："  VerticalAlignment="Center"/>
+        <ui:TextBox Grid.Column="1"   Icon="Target16" Text="{Binding Jump.TargetTag,Mode=TwoWay}"  Cursor="IBeam"/>
+        <TextBlock Grid.Column="2" Text="循环次数 (0=无限循环):" VerticalAlignment="Center" Margin="15,0,5,0"/>
+        <ui:NumberBox Grid.Column="3" IntegersOnly="True" Min="0" Step="1"   Text="{Binding Jump.NumberOfCycles,Mode=TwoWay}"   Cursor="IBeam"  />
+
+
     </Grid>
 
+    
 </UserControl>

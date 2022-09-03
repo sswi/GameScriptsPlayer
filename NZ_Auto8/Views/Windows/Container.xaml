@@ -12,7 +12,7 @@
         WindowCornerPreference="Round"     
         WindowStartupLocation="CenterScreen"     
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"     
-        Title="Container" Height="500" Width="835">
+        Title="哦豁" Height="500" Width="835">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -79,6 +79,6 @@
         
         </Grid>
 
-        <ui:TitleBar ShowMaximize="True" ShowMinimize="True"   UseSnapLayout="True" Title="0000000000000"/>
+        <ui:TitleBar ShowMaximize="True" ShowMinimize="True"   UseSnapLayout="True" Title="ABCDEFGHIJKLMN"/>
     </Grid>
 </ui:UiWindow>

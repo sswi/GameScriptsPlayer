@@ -15,7 +15,12 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="延迟值(毫秒)：" VerticalAlignment="Center" Margin="0,0,15,0"/>
-        <ui:NumberBox IntegersOnly="True" Min="0" Step="50" Icon="Clock12"   Text="{Binding EndWaitTime,Mode=TwoWay}"    Grid.Column="1" Cursor="IBeam"  />
+
+        <TextBlock Text="延迟值(毫秒)：" VerticalAlignment="Center"/>
+        <ui:TextBox  Icon="Clock12"   Text="{Binding EndWaitTime,Mode=TwoWay}"    Grid.Column="1" Cursor="IBeam"  Margin="15,0,0,0" />
+
+        
+        
+
     </Grid>
 </UserControl>

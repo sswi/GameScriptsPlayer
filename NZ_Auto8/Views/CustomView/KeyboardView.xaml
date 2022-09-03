@@ -12,12 +12,16 @@
   
         <Grid  >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ComboBox x:Name="comboBox" SelectedIndex="{Binding Keyboard.Mode,Mode=TwoWay,Converter={StaticResource IntToKeyboardMode}}"/>
-        <ui:TextBox x:Name="autoSuggestBox" Grid.Column="2"  Foreground="OrangeRed" Text="{Binding Keyboard.KeyChar,Mode=TwoWay}"   Icon="Keyboard12320" />
-        </Grid>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="操作：    " VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="1" x:Name="comboBox" SelectedIndex="{Binding Keyboard.Mode,Mode=TwoWay,Converter={StaticResource IntToKeyboardMode}}"/>
+             <ui:TextBox x:Name="autoSuggestBox" Grid.Column="3"  Foreground="OrangeRed" Text="{Binding Keyboard.KeyChar,Mode=TwoWay}"   Icon="Keyboard12320" />
+
+
+    </Grid>
  
 </UserControl>

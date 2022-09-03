@@ -11,11 +11,12 @@
             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding Mode,Converter={StaticResource EventModeToVisibility},ConverterParameter=1}">
 
 
-
+    <StackPanel>
+       
         <StackPanel Orientation="Horizontal" >
-            
-        
-        <ComboBox x:Name="comboBox"  FontSize="12"  Width="150" SelectedIndex="{Binding Mouse.Mode,Converter={StaticResource IntToMouseMode},Mode=TwoWay}" />
+
+            <TextBlock Text="操作：    " VerticalAlignment="Center"/>
+            <ComboBox x:Name="comboBox"  FontSize="12"  Width="150" SelectedIndex="{Binding Mouse.Mode,Converter={StaticResource IntToMouseMode},Mode=TwoWay}" />
 
             <StackPanel Orientation="Horizontal" Visibility="{Binding Mouse.Mode,Converter={StaticResource MouseModeToVisibility}}">
                 <TextBlock Text="X:"  VerticalAlignment="Center" Margin="10,0,5,0" FontSize="12"/>
@@ -24,12 +25,18 @@
                 <TextBlock Text="Y:"  VerticalAlignment="Center" Margin="10,0,5,0" FontSize="12"/>
                 <ui:TextBox  Text="{Binding Mouse.Postion.Y,Mode=TwoWay}" VerticalAlignment="Center" FontSize="12" Width="100"/>
 
-            <TextBlock Text="耗时"  VerticalAlignment="Center" Margin="10,0,5,0" FontSize="12"/>
-            <ui:TextBox  Text="{Binding Mouse.MoveTimeSpan,Mode=TwoWay}" VerticalAlignment="Center" FontSize="12" Width="100"/>
+                <TextBlock Text="耗时"  VerticalAlignment="Center" Margin="10,0,5,0" FontSize="12"/>
+                <ui:TextBox  Text="{Binding Mouse.MoveTimeSpan,Mode=TwoWay}" VerticalAlignment="Center" FontSize="12" Width="100"/>
 
-            <ui:ToggleSwitch Content="模拟滑动" IsChecked="{Binding Mouse.IsSimulatesSliding,Mode=TwoWay}" Margin="20,0,0,0"/>
-           
+                <ui:ToggleSwitch Content="模拟滑动" IsChecked="{Binding Mouse.IsSimulatesSliding,Mode=TwoWay}" Margin="20,0,0,0"/>
+
+            </StackPanel>
+
         </StackPanel>
-        </StackPanel>
+
+
+    </StackPanel>
+
+
 
 </UserControl>

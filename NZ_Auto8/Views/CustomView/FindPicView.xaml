@@ -18,34 +18,39 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="图片名(多图用|隔开): " VerticalAlignment="Center" Margin="0,0,15,0"/>
-            <ui:TextBox Icon="Image24" Text="{Binding Picture.Path,Mode=TwoWay}"  Grid.Column="1" Cursor="IBeam" Width="250" />
-            <TextBlock Text="相似度(0.01~1):"  VerticalAlignment="Center" Margin="20,0"/>
-            <ui:TextBox   Width="150" Text="{Binding Picture.Similarity,Mode=TwoWay}"/>
+            <ui:TextBox Icon="Image24" Text="{Binding Picture.Path,Mode=TwoWay}"  Grid.Column="1" Cursor="IBeam" Width="415" />
+            <TextBlock Text="相似度(0.1~1):"  VerticalAlignment="Center" Margin="20,0"/>
+            <ui:TextBox   Icon="ColumnDoubleCompare20" Width="206" Text="{Binding Picture.Similarity,Mode=TwoWay}"/>
         </StackPanel>
 
         <StackPanel  Grid.Row="1" Margin="0,10,0,0">
             <StackPanel Orientation="Horizontal">
             <TextBlock Text="左上角坐标  X1:   " VerticalAlignment="Center" />
-            <ui:TextBox Width="200"   Text="{Binding Picture.StartPoint.X,Mode=TwoWay}"/>
+            <ui:TextBox Width="150"   Text="{Binding Picture.StartPoint.X,Mode=TwoWay}"/>
             <TextBlock Text="Y1:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-            <ui:TextBox   Width="200" Text="{Binding Picture.StartPoint.Y,Mode=TwoWay}"/>
-
-        </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10">
-                <TextBlock Text="右下角坐标  X2:   " VerticalAlignment="Center" />
-                <ui:TextBox     Width="200"  Text="{Binding Picture.EndPoint.X,Mode=TwoWay}"/>
+            <ui:TextBox   Width="150" Text="{Binding Picture.StartPoint.Y,Mode=TwoWay}"/>
+                <TextBlock Text="右下角坐标  X2:   " VerticalAlignment="Center"  Margin="15,0,0,0"/>
+                <ui:TextBox     Width="150"  Text="{Binding Picture.EndPoint.X,Mode=TwoWay}"/>
                 <TextBlock Text="Y2:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-                <ui:TextBox   Width="200" Text="{Binding Picture.EndPoint.Y,Mode=TwoWay}"/>
-            </StackPanel>
+                <ui:TextBox   Width="150" Text="{Binding Picture.EndPoint.Y,Mode=TwoWay}"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
             <TextBlock Text="寻找时间长度:   " VerticalAlignment="Center"  Margin="0,0,10,0"/>
             <ui:TextBox    Width="140" Text="{Binding Picture.TimeOut,Mode=TwoWay}"/>
-            <TextBlock Text="找到跳至步数:" VerticalAlignment="Center"  Margin="10,0"/>
+            <!--<TextBlock Text="找到跳至步数:" VerticalAlignment="Center"  Margin="10,0"/>
             <ui:TextBox  Width="140" Text="{Binding Picture.HasFoundJumToIndex,Mode=TwoWay}"/>
             <TextBlock Text="未找到跳至:" VerticalAlignment="Center"  Margin="15,0,5,0"/>
-            <ui:TextBox   Width="140" Text="{Binding Picture.NotFoundJumToIndex,Mode=TwoWay}"/>
+            <ui:TextBox   Width="140" Text="{Binding Picture.NotFoundJumToIndex,Mode=TwoWay}" Cursor="IBeam"/>-->
+
+
+            <TextBlock  Text="找到跳转标记：" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <ui:TextBox   Icon="Target16" Text="{Binding Picture.HasFoundTargetTag,Mode=TwoWay}" Width="210" Cursor="IBeam"/>
+
+            <TextBlock  Text="未找到跳转标记：" Margin="15,0,10,0" VerticalAlignment="Center"/>
+            <ui:TextBox   Icon="TargetArrow16" Text="{Binding Picture.NofFoundTargetTag,Mode=TwoWay}" Width="210" Cursor="IBeam"/>
         </StackPanel>
 
     </Grid>

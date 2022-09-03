@@ -64,6 +64,18 @@ namespace NZ_Auto8.Models
         }
 
 
+        private string nofFoundTargetTag;
+        /// <summary>
+        /// 没找到 跳转到目标标记
+        /// </summary>
+        public string NofFoundTargetTag
+        {
+            get { return nofFoundTargetTag; }
+            set { nofFoundTargetTag = value; OnPropertyChanged(); }
+        }
+
+
+
         private int hasFoundJumToIndex = -1;
         /// <summary>
         /// 找到 跳转到步数
@@ -74,5 +86,15 @@ namespace NZ_Auto8.Models
             set { hasFoundJumToIndex = value; OnPropertyChanged(); }
         }
 
+
+        private string hasFoundTargetTag;
+        /// <summary>
+        /// 找到 跳转到目标标记
+        /// </summary>
+        public string HasFoundTargetTag
+        {
+            get { return hasFoundTargetTag; }
+            set { hasFoundTargetTag = value; OnPropertyChanged(); }
+        }
     }
 }

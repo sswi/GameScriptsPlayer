@@ -58,13 +58,36 @@ namespace NZ_Auto8.Handlers
                     return color == null ? step.Color.NotFoundJumToIndex : step.Color.HasFoundJumToIndex; //找到则返回 “找到跳转的步索引”，找不到则返回 “找不到跳转步的索引”
 
 
-
+                //文本输入
                 case EventMode.Input:
                     _dm.SendString(_dm.BindWindowHwnd,step.InputText);                   
+                    return -1;
+
+                //随机延迟等待
+                case EventMode.RandomDelay:
+                    Random random = new Random();
+                    Thread.Sleep(random.Next(step.RandomDelay.MinValue, step.RandomDelay.MaxValue));
+                    return -1;
+
+                //恢复键状态
+                case EventMode.KeyboardReverted:
+                    KeyCharManage.RestKeyState(_dm);
                     return -1;
             }
             return -1;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,7 +106,7 @@ namespace NZ_Auto8.Handlers
             else
             {
                 //若已跳转次数大于或等于 设置的跳转次数 则清空跳转 次数，返回 -1，下一步,  否则 返回跳转 步数索引，已跳转次数+1
-                if (jump.CyclesCount >=jump.NumberOfCycles)
+                if (jump.CyclesCount >=jump.NumberOfCycles-1)
                 {
                     jump.CyclesCount = 0;
                     return -1;
@@ -239,8 +262,8 @@ namespace NZ_Auto8.Handlers
                 {
                     return new Point(X, Y);
                 }
-                // 按  1000/3=330 帧计算
-               Thread.Sleep(3);
+                // 按  1000/1=1000帧计算
+                Thread.Sleep(1);
             }
             return null;
         }
@@ -263,8 +286,8 @@ namespace NZ_Auto8.Handlers
                     var p = new Point(X, Y);
                     return p;
                 }
-                // 按  1000/15=330 帧计算
-                Thread.Sleep(3);
+                // 按  1000/1=1000帧计算
+                Thread.Sleep(1);
             }
             return null;
         }

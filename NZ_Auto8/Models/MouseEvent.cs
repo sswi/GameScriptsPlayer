@@ -44,9 +44,6 @@ namespace NZ_Auto8.Models
             get { return isSimulatesSliding; }
             set { isSimulatesSliding = value; }
         }
-
-
-
     }
 
     public enum MouseMode

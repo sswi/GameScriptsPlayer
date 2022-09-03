@@ -13,12 +13,12 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition/>           
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="图片名(多图用|隔开): " VerticalAlignment="Center" Margin="0,0,15,0"/>
-            <ui:TextBox Icon="Image24" Text="{Binding Picture.Path,Mode=TwoWay}"  Grid.Column="1" Cursor="IBeam" Width="250" />
-            <TextBlock Text="相似度(0.01~1):"  VerticalAlignment="Center" Margin="20,0"/>
+            <ui:TextBox Icon="Image24" Text="{Binding Picture.Path,Mode=TwoWay}"  Grid.Column="1" Cursor="IBeam" Width="300" />
+            <TextBlock Text="相似度(0.1~1):"  VerticalAlignment="Center" Margin="20,0"/>
             <ui:TextBox  Width="150" Text="{Binding Picture.Similarity,Mode=TwoWay}"/>
         </StackPanel>
 
@@ -40,10 +40,13 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <TextBlock Text="寻找时间长度:   " VerticalAlignment="Center"  Margin="0,0,10,0"/>
-            <ui:TextBox    Width="200" Text="{Binding Picture.TimeOut,Mode=TwoWay}"/>
-            <TextBlock Text="未找到跳至:" VerticalAlignment="Center"  Margin="15,0,5,0"/>
-            <ui:TextBox   Width="200" Text="{Binding Picture.NotFoundJumToIndex,Mode=TwoWay}"/>
+            <ui:TextBox    Width="170" Text="{Binding Picture.TimeOut,Mode=TwoWay}"/>
+
+            <TextBlock  Text="未找到跳转标记：" Margin="15,0,10,0" VerticalAlignment="Center"/>
+            <ui:TextBox   Icon="TargetArrow16" Text="{Binding Picture.NofFoundTargetTag,Mode=TwoWay}" Width="170" Cursor="IBeam"/>
         </StackPanel>
+
+
 
     </Grid>
 </UserControl>

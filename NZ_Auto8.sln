@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NZ_Auto8", "NZ_Auto8\NZ_Auto8.csproj", "{6241F911-B555-4856-A272-278433932E87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XE.Commands", "..\..\04\XE.Commands\XE.Commands\XE.Commands.csproj", "{66A716D8-A3EA-489F-8F98-C1274D54C6ED}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +21,6 @@ Global
 		{6241F911-B555-4856-A272-278433932E87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6241F911-B555-4856-A272-278433932E87}.Release|x86.ActiveCfg = Release|x86
 		{6241F911-B555-4856-A272-278433932E87}.Release|x86.Build.0 = Release|x86
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Debug|x86.Build.0 = Debug|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Release|x86.ActiveCfg = Release|Any CPU
-		{66A716D8-A3EA-489F-8F98-C1274D54C6ED}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

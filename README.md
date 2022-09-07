@@ -1,7 +1,7 @@
 # GameScriptsPlayer
 脚本执行器
 
-![Image text](Screenshots/Player.png) 
+![Image text](截图/Player.png) 
 
 
 免责声明：

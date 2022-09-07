@@ -1,6 +1,9 @@
 # GameScriptsPlayer
 脚本执行器
-![Image text](Screenshots/Player01.png) 
+
+![Image text](Screenshots/Player.png) 
+
+
 免责声明：
 本程序不针对任何游戏、软件！
 使用本程序导致游戏封号、账号被屏蔽等后果自行负责，与本作者无关！

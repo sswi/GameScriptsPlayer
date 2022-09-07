@@ -24,12 +24,12 @@ namespace NZ_Auto8.DM
         /// <summary>
         /// 大漠插件注册码
         /// </summary>
-        public const string DmRegCode = "jv965720b239b8396b1b7df8b768c919e86e10f";
+        public const string DmRegCode = "w30413033bf71a848c9b8c3d6a3963cab952745aa";
 
         /// <summary>
         /// 大漠插件版本附加信息
         /// </summary>
-        public const string DmVerInfo = "j2y1k46l6odi700";
+        public const string DmVerInfo = "1234";
 
         /// <summary>
         /// 大漠插件全局路径,设置了此路径后,所有接口调用中,相关的文件都相对于此路径. 比如图片,字库等.

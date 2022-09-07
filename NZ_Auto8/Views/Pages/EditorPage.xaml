@@ -11,7 +11,22 @@
            mc:Ignorable="d" 
       d:DesignHeight="1200" d:DesignWidth="800"           
       Title="EditorPage"  >
-
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!--<ThicknessAnimation Duration="0:0:.85" Storyboard.TargetProperty="Margin" From="900,0,-900,0" To="0" DecelerationRatio=".9" />-->
+                        <ThicknessAnimation Duration="0:0:.500" Storyboard.TargetProperty="Margin" From="-50,0,50,0" To="0" DecelerationRatio=".9" />
+                        <DoubleAnimation Duration="0:0:.400" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </Page.Triggers>
+    
+    
+    
     <Grid x:Name="editorPage" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -46,19 +61,19 @@
         </Grid>
 
 
-<!--菜单栏-->        
+        <!--菜单栏-->
         <Menu  Grid.Row="1"    VerticalAlignment="Center" Margin="20,0" FontSize="13">
             <ui:MenuItem  Header="{Binding GameHandle.BindButtonText}" IsEnabled="{Binding GameHandle.IsEnabled}" Command="{Binding BindWindowCommand}"  d:Header="窗口绑定" SymbolIcon="SlideLink20"  />
             <ui:MenuItem Header="置左上角" SymbolIcon="ExpandUpLeft16" Command="{Binding WindowToLeftTopCommand}" />
-            <ui:MenuItem Header="导入脚本" SymbolIcon="Folder20" Command="{Binding LoadScriptsCommand}" />    
+            <ui:MenuItem Header="导入脚本" SymbolIcon="Folder20" Command="{Binding LoadScriptsCommand}" />
             <ui:MenuItem  DataContext="{Binding  RunButtonState}" Header="{Binding Text}" SymbolIcon="{Binding Icon}" Command="{Binding ElementName=editorPage,Path=DataContext.RunAndStopCommand}"  d:Header="调试" d:SymbolIcon="Play32"  Foreground="YellowGreen" />
             <ui:MenuItem SymbolIcon="Save20" Header="保存"  Command="{Binding SaveAsScriptCommand}" CommandParameter="save"/>
             <ui:MenuItem  Header="另存为" SymbolIcon="DocumentSave24" Command="{Binding SaveAsScriptCommand}" CommandParameter="save as" />
-            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16"/>
+            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16" Command="{Binding ShowMessageWindowCommand}"/>
 
         </Menu>
 
-        
+
         <Grid Grid.Row="2" Margin="5,10">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -66,47 +81,47 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="操作:" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                <ComboBox  ItemsSource="{Binding EventNames}" Width="200" SelectedIndex="{Binding Step.Mode,Mode=TwoWay,Converter={StaticResource IntToEventMode}}" />                
+                <ComboBox  ItemsSource="{Binding EventNames}" Width="200" SelectedIndex="{Binding Step.Mode,Mode=TwoWay,Converter={StaticResource IntToEventMode}}" />
                 <TextBlock Text="结束等待：" VerticalAlignment="Center" Margin="15,0,5,0"/>
                 <ui:TextBox Icon="Clock12"  PlaceholderText="结束等待"   Width="130"  Text="{Binding Step.EndWaitTime,Mode=TwoWay}"/>
                 <ui:Button Content="添加" Command="{Binding AddStepCommand}" CommandParameter="add" Icon="AddCircle28" Margin="20,0,10,0" Width="80" Height="35"/>
                 <ui:Button Content="插入" Command="{Binding AddStepCommand}" CommandParameter="insert" Icon="ArrowDownload16" Width="80" Height="35"/>
                 <ui:Button Content="清空" Command="{Binding AddStepCommand}" CommandParameter="clear" Icon="Delete24" Width="80" Height="35" Margin="10,0,0,0"/>
             </StackPanel>
-            
+
         </Grid>
-        
-<!--新增数据-->
+
+        <!--新增数据-->
         <Grid Grid.Row="3" Margin="20,0" DataContext="{Binding Step}">
             <StackPanel>
-            <Border BorderThickness=".5" BorderBrush="Gray" CornerRadius="5" Opacity=".3"/>
-            <StackPanel  Margin="10">
-            <controls:KeyboardView/>
-            <controls:DelayView/>
-            <controls:MouseView Margin="20,0,0,0"/>
-             <controls:FindPicView/>
-            <controls:JumView />
-            <controls:FindPicClickView/>
-            </StackPanel>
-            <controls:FindColorView/>
-            <controls:InputTextView/>
-            <controls:RandomDelayView/>
-            <controls:KeyboardRevertedView/>
-           <controls:ShutdownView/>
-           <controls:KillAppView/>
+                <Border BorderThickness=".5" BorderBrush="Gray" CornerRadius="5" Opacity=".3"/>
+                <StackPanel  Margin="10">
+                    <controls:KeyboardView/>
+                    <controls:DelayView/>
+                    <controls:MouseView Margin="20,0,0,0"/>
+                    <controls:FindPicView/>
+                    <controls:JumView />
+                    <controls:FindPicClickView/>
+                </StackPanel>
+                <controls:FindColorView/>
+                <controls:InputTextView/>
+                <controls:RandomDelayView/>
+                <controls:KeyboardRevertedView/>
+                <controls:ShutdownView/>
+                <controls:KillAppView/>
             </StackPanel>
         </Grid>
-        
-<!--显示列表-->
+
+        <!--显示列表-->
         <Border Grid.Row="4" Padding="5" Margin="20,10,20,0" Style="{StaticResource XBorderStyle}">
-        <ListView   ItemsSource="{Binding Scripts}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                        <ui:CardExpander>
+            <ListView   ItemsSource="{Binding Scripts}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ui:CardExpander IsExpanded="{Binding IsExpanded,Mode=TwoWay}">
                             <ui:CardExpander.Header>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="180"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
@@ -118,14 +133,18 @@
                                         <TextBlock d:Text="找颜色" Text="{Binding Mode,Converter={StaticResource EventModeToString}}" Foreground="#a07ff5" FontSize="15" VerticalAlignment="Center"  Margin="20,0,0,0"/>
                                     </StackPanel>
                                     <!--标记名称-->
-                                    <Grid Grid.Column="1"  Margin="35,0">
+                                    <Grid Grid.Column="1" >
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition MinWidth="200" MaxWidth="450"/>
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="标记："  VerticalAlignment="Center" Margin="0,0,5,0" />
-                                        <ui:TextBox  Grid.Column="1"  Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"/>
+                                        <TextBlock Text="标记："  VerticalAlignment="Center" Margin="0,0,5,0"  Foreground="OrangeRed"/>
+                                        <ui:TextBox  Grid.Column="1"  Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"  />
+                                        <TextBlock Grid.Column="2" Text="{Binding Remark,StringFormat='注释: {0}'}" VerticalAlignment="Center"  TextWrapping="NoWrap" HorizontalAlignment="Left" Margin="30,0,10,0"/>
                                     </Grid>
+
+
                                     <!--起点、结束点-->
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="2">
                                         <!--设为起点按钮-->
@@ -139,7 +158,7 @@
 
                             </ui:CardExpander.Header>
 
-                            <Grid  Margin="0,10,0,0">
+                            <Grid  Margin="0,10,0,0" Visibility="{Binding IsExpanded,Converter={StaticResource BoolToVisibility}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="auto"/>
@@ -174,9 +193,9 @@
 
 
                         </ui:CardExpander>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-      </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
     </Grid>
 </ui:UiPage>

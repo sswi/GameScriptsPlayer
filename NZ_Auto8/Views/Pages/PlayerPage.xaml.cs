@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NZ_Auto8.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace NZ_Auto8.Views.Pages
     /// </summary>
     public partial class PlayerPage : Page
     {
-        public PlayerPage()
+        public PlayerPage(PlayerPageViewModel  vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

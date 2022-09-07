@@ -8,11 +8,6 @@ namespace NZ_Auto8.Models
 {
     public class ScriptFile
     {
-        public string? FileName { get; set; }
-
-        
-
-
-
+        public string? FileName { get; set; }       
     }
 }

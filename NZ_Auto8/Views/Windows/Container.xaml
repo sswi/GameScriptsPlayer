@@ -12,7 +12,7 @@
         WindowCornerPreference="Round"     
         WindowStartupLocation="CenterScreen"     
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"     
-        Title="哦豁" Height="500" Width="835">
+        Title="哦豁" Height="500" Width="835"  Closed="UiWindow_Closed">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -36,22 +36,26 @@
                 <ui:NavigationStore.Items>
                     <ui:NavigationItem
                         Content="主页"
+                        PageType="{x:Type pages:HomePage}" 
                         Icon="Home24"
-                        PageTag="home"
+                        PageTag="home" Cursor="Hand"
                          />
                     <ui:NavigationItem
                         Content="执行器"
                         Icon="Fluent24"
+                        PageType="{x:Type pages:PlayerPage}" 
                         PageTag="player"
                        Cursor="Hand" />
                     <ui:NavigationItem
                         Content="编辑器"
                         Icon="Note16"
                         PageTag="editor"
-                         PageType="{x:Type pages:EditorPage}" Cursor="Hand"/>
+                         PageType="{x:Type pages:EditorPage}" 
+                        Cursor="Hand"/>
                     <ui:NavigationItem
                         Content="工具"
                         Icon="Diversity24"
+                         PageType="{x:Type pages:ToolsPage}" 
                         PageTag="games" Cursor="Hand"
                          />
         

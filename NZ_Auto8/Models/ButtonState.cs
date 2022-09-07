@@ -21,6 +21,9 @@ namespace NZ_Auto8.Models
         }
 
         private string? text;
+        /// <summary>
+        /// 按钮文本
+        /// </summary>
         public string? Text
         {
             get { return text; }
@@ -28,6 +31,9 @@ namespace NZ_Auto8.Models
         }
 
         private string? icon;
+        /// <summary>
+        /// 按钮图标
+        /// </summary>
         public string? Icon
         {
             get { return icon; }

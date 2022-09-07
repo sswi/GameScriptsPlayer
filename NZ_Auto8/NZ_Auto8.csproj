@@ -17,17 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Libs\QQPCRTP.dll" />
-    <None Remove="Libs\QQPCRTPReg.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Libs\QQPCRTP.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Libs\QQPCRTPReg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="wpfui.ico" />
   </ItemGroup>
 
@@ -44,9 +33,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="XE.Commands">
-      <HintPath>..\..\..\..\XE.Commands.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\..\04\XE.Commands\XE.Commands\XE.Commands.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Libs\QQPCRTP.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Libs\QQPCRTPReg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

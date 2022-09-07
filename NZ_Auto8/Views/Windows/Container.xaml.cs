@@ -41,5 +41,10 @@ namespace NZ_Auto8.Views.Windows
 
         public void SetPageService(IPageService pageService)
     => RootNavigation.PageService = pageService;
+
+        private void UiWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

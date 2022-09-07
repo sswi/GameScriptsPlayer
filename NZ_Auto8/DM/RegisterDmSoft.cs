@@ -23,7 +23,7 @@ namespace NZ_Auto8.DM
 
 
         /// <summary>
-        /// 免注册调用大漠插件
+        /// 免系统注册方式调用大漠插件
         /// </summary>
         /// <returns></returns>
         public static bool RegisterDmSoftDll()
@@ -32,7 +32,7 @@ namespace NZ_Auto8.DM
             if (setDllPathResult == 0)
             {
                 // 加载 dm.dll 失败
-                MessageBox.Show("加载改名后的大漠插件  QQPCRTP.dll 失败");
+                MessageBox.Show($"加载大漠插件 - 名称为:  {DmConfig.DmClassDllPath}   失败");
                 return false;
             }
             return true;

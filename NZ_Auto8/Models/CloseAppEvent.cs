@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XE.Commands;
+﻿using XE.Commands;
 
 namespace NZ_Auto8.Models
 {
@@ -13,7 +8,7 @@ namespace NZ_Auto8.Models
     /// </summary>
     public class CloseAppEvent:BindableBase
     {
-        private string processName;
+        private string processName=null!;
         /// <summary>
         /// 进程名
         /// </summary>
@@ -31,7 +26,8 @@ namespace NZ_Auto8.Models
         public bool IsCheck
         {
             get { return isCheck; }
-            set {
+            set 
+            {
                 isCheck = value;
                 OnPropertyChanged();
             }

@@ -8,8 +8,22 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ToolsPage">
-
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!--<ThicknessAnimation Duration="0:0:.85" Storyboard.TargetProperty="Margin" From="900,0,-900,0" To="0" DecelerationRatio=".9" />-->
+                        <ThicknessAnimation Duration="0:0:.500" Storyboard.TargetProperty="Margin" From="-50,0,50,0" To="0" DecelerationRatio=".9" />
+                        <DoubleAnimation Duration="0:0:.400" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </Page.Triggers>
+    
+    
     <Grid>
-        
+        <TextBlock Text="开发中...." Grid.Row="3" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </ui:UiPage>

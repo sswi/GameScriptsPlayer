@@ -2,17 +2,22 @@
 using NZ_Auto8.Handlers;
 using NZ_Auto8.Models;
 using NZ_Auto8.Services;
+using NZ_Auto8.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using XE.Commands;
 
 namespace NZ_Auto8.ViewModels
 {
+    /// <summary>
+    /// 编辑器页面视图模型
+    /// </summary>
     public class EditorPageViewModel : BindableBase
     {
         //插件实例
@@ -40,6 +45,9 @@ namespace NZ_Auto8.ViewModels
 
         //起始步
         private int startIndex = 0;
+        /// <summary>
+        /// 起始步
+        /// </summary>
         public int StartIndex
         {
             get { return startIndex; }
@@ -48,6 +56,9 @@ namespace NZ_Auto8.ViewModels
 
         //停止步
         private int endIndex = -1;
+        /// <summary>
+        /// 停止步
+        /// </summary>
         public int EndIndex
         {
             get { return endIndex; }
@@ -80,15 +91,19 @@ namespace NZ_Auto8.ViewModels
 
 
 
-
-        //脚本列表
+        /// <summary>
+        /// 脚本 "步"列表
+        /// </summary>
         public ObservableCollection<Step> Scripts { get; set; } = new();
 
 
+        /// <summary>
+        /// 当前支持的 操作的名称列表
+        /// </summary>
         public List<string> EventNames { get; set; } = new() { "键盘事件", "鼠标事件", "延迟事件", "限时找图", "跳转语句", "找图点击", "限时找色", "文本输入","随机延迟等待", "按键复归","关机","结束进程" };
 
 
-        //调试按钮状态
+        //调试按钮状态，及图标
         public ButtonState RunButtonState { get; set; } = new ButtonState("调试", "Play32");
 
 
@@ -105,19 +120,31 @@ namespace NZ_Auto8.ViewModels
                 }
             }
 
-            //取反
+            //判断大漠插件是否通过注册码验证，没验证成功无法使用，收费插件，莫得办法
+            if (!DmSoft.IsReg)
+            {
+                MessageBox.Show("插件注册失败，无法运行脚本，请根据开始的错误提示通过注册\r\n温馨提醒：十分抱歉，大漠插件是收费的，本工具是基于大漠插件为底层开发的，本人也是买激活码，好在很便宜50块700天（7分钱1台电脑/天），某宝/大漠官网有卖\r\n或者去贴吧论坛找别人分享的注册码");
+                return;
+            }
+
+
+
+            //运行状态 取反
             IsRun = !IsRun;
 
-            //跳转步骤重定向
+            //跳转步骤重定向，用于验证脚本各标签和跳转是否有效，不执行这步的话脚本有错误跳转的话程序将直接崩了
             if (!RestJump())
             {
                 return;
             }
 
-            //运行
+            //开始 运行
             if (IsRun)
             {
+                //更新界面 显示为运行状态
                 RunButtonState.SetRunButtonState(IsRun);
+
+                //开启线程，不用Task任务
                 Thread thread = new(() =>
                 {
 
@@ -126,21 +153,31 @@ namespace NZ_Auto8.ViewModels
                     //设置鼠标速度=10
                     _dm.SetMouseSpeed(10);
 
-
+             
                     //脚本运行
                     for (int i = startIndex; i < Scripts.Count; i++)
                     {
-                        //是否运行，用于接受中途停止
+                        //是否运行，用于接受用户中途手动停止
                         if (!IsRun) break;
 
-                        //步数跳转
-                        //接受返回值，result=-1  下一步，result >=0的为跳转
+                        //调试信息 创建一个线程线程去输出，保证脚本运行最低延迟
+                        if (Scripts[i].Remark!=null && Scripts[i].Remark.Length>0)
+                        {
+                            Task.Run(() =>
+                            {
+                                DebugInformation = $"[{Scripts[i].Index}].{Scripts[i].Remark}";
+                            });                            
+                        }
+                 
+                        
+                        //“步”的执行，此处脚本正式开始运行，接受返回值，result=-1  下一步，result >=0的为跳转                        
                         var result = Scripts[i].Run();
+
+                        //步数跳转
                         if (result != -1)
                         {
                             if (result < Scripts.Count)
                             {
-
                                 i = result != 0 ? result - 1 : 0;
                             }
                             else
@@ -149,27 +186,20 @@ namespace NZ_Auto8.ViewModels
                             }
                         }
 
-
-
-
                         //判断是否设置了停止步
                         if (endIndex != -1 && i == endIndex)
                         {
                             break;
                         }
-#if DEBUG
-                        Debug.WriteLine(Scripts[i].Remark);
-#endif
 
-                        //当前步数结束后等待延迟
+                        //当前步数结束后等待延迟，如果等待时间超过1000ms则分段执行，方便中途手动停止时候脚本迟迟无法终止运行
                         if (Scripts[i].EndWaitTime>1000)
                         {
                             //注意！这步不能直接操作EndWaitTime，否则会改变 脚本的设定值
                             int span = Scripts[i].EndWaitTime;
                             while (span>=0)
                             {
-                                if (!IsRun) break;
-               
+                                if (!IsRun) break;               
                                 //如果时间大于1000 时候，就减少1s
                                 if (span > 1000)
                                 {
@@ -178,7 +208,7 @@ namespace NZ_Auto8.ViewModels
                                 }
                                 else
                                 {
-                                    //不足1000时候就直接自行剩下的延时时间
+                                    //不足1000时候就直接执行剩下的延时时间
                                     Thread.Sleep(span);
                                     break;
                                 }
@@ -194,11 +224,12 @@ namespace NZ_Auto8.ViewModels
 
                     //脚本运行结束 
                     IsRun = false;
+                    //更改界面 调试按钮状态
                     RunButtonState.SetRunButtonState(IsRun);
                 });
+                //开始线程
                 thread.Start();
             }
-
 
 
             //停止脚本
@@ -206,16 +237,16 @@ namespace NZ_Auto8.ViewModels
             _dm.SetMouseSpeed(App.mouseSpeed);
             //开启鼠标高精度 
             _dm.EnableMouseAccuracy(1);
-            //恢复键状态
+            //恢复键状态，避免卡键
             KeyCharManage.RestKeyState(_dm);
-
         });
 
-        //窗口数据
+        //游戏窗口数据
         public GameHandle GameHandle { get; set; }
 
         //窗体绑定
         public Command BindWindowCommand => new(GameHandle.BindWindow);
+
 
         //置窗口于左上角
         public Command WindowToLeftTopCommand => new(GameHandle.SetWinowToLeftTop);
@@ -365,8 +396,9 @@ namespace NZ_Auto8.ViewModels
 
 
 
-
-        //编号重新排序
+        /// <summary>
+        /// 编号重新排序
+        /// </summary>
         private void RestStartIndexList()
         {
             for (int i = 0; i < Scripts.Count; i++)
@@ -376,13 +408,42 @@ namespace NZ_Auto8.ViewModels
 
         }
 
-        //弹出调试窗口
 
+
+
+        private string debuginfo;
+        /// <summary>
+        /// 调试信息显示
+        /// </summary>
+        public string DebugInformation
+        {
+            get { return debuginfo; }
+            set 
+            { 
+                debuginfo = value;
+                if (messageWindow!=null)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        messageWindow.Messages.Insert(0, value);
+                    });            
+                }
+                OnPropertyChanged(); 
+            }
+        }
+
+
+
+
+        private MessageWindow messageWindow;
+        //弹出调试窗口
         public Command ShowMessageWindowCommand => new(() =>
         {
-
-
-
+            if (messageWindow==null)
+            {
+                messageWindow = new MessageWindow();
+            }
+            messageWindow.Show();  
         });
 
 
@@ -421,7 +482,12 @@ namespace NZ_Auto8.ViewModels
 
 
 
-        //删除不需要的属性值，减少实例构造
+
+        /// <summary>
+        /// 删除不需要的属性值，减少脚本输出长度，和减少解析计算量，啊~~有点冗余，开始没想到这步， 暂时就这样吧，后期再用反射
+        /// </summary>
+        /// <param name="step"></param>
+        /// <returns></returns>
         private static Step DleteNotNeedProperty(Step step)
         {
             switch (step.Mode)
@@ -435,6 +501,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.Mouse:
                     step.Keyboard = null;
@@ -445,6 +512,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.Sleep:
                     step.Keyboard = null;
@@ -455,6 +523,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.FindPicture:
                     step.Keyboard = null;
@@ -465,6 +534,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.Jump:
                     step.Keyboard = null;
@@ -475,6 +545,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.FindPictureClick:
                     step.Keyboard = null;
@@ -485,6 +556,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.FindColor:
                     step.Keyboard = null;
@@ -495,6 +567,7 @@ namespace NZ_Auto8.ViewModels
                     step.InputText = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     break;
                 case EventMode.Input:
                     step.Keyboard = null;
@@ -504,6 +577,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     //step.InputText = null;
                     break;
                 case EventMode.RandomDelay:
@@ -513,6 +587,7 @@ namespace NZ_Auto8.ViewModels
                     step.Picture = null;
                     step.Color = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     //step.InputText = null;
                     break;
                 case EventMode.KeyboardReverted:
@@ -523,6 +598,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.Shutdown = null;
                     //step.InputText = null;
                     break;
                 case EventMode.KillApp:
@@ -531,11 +607,21 @@ namespace NZ_Auto8.ViewModels
                     step.Jump = null;
                     step.Picture = null;
                     step.Color = null;
+                    step.Shutdown = null;
                     step.RandomDelay = null;                    
                    // step.KillApp = null;
                     //step.InputText = null;
                     break;
-
+                case EventMode.ShutDown:
+                    step.Keyboard = null;
+                    step.Mouse = null;
+                    step.Jump = null;
+                    step.Picture = null;
+                    step.Color = null;              
+                    step.RandomDelay = null;
+                    step.KillApp = null;
+                    //step.InputText = null;
+                    break;
             }
             return step;
         }

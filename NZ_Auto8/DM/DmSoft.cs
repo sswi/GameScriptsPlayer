@@ -7,10 +7,21 @@ using System.Runtime.InteropServices;
 namespace NZ_Auto8.DM
 {
 
+    /// <summary>
+    /// 大漠插件的调用库
+    /// </summary>
     public class DmSoft : IDisposable
     {
-        private Type obj = null;
-        private object obj_object = null;
+
+        /// <summary>
+        /// 注册码验证是否成功
+        /// </summary>
+        public static bool IsReg = false;
+
+
+
+        private Type? obj = null;
+        private object? obj_object = null;
         private bool disposedValue;
 
         public DmSoft()
@@ -40,7 +51,7 @@ namespace NZ_Auto8.DM
         public int SetRowGapNoDict(int row_gap)
         {
             object[] args = new object[1];
-            object result;
+            object? result;
             args[0] = row_gap;
 
             result = obj.InvokeMember("SetRowGapNoDict", BindingFlags.InvokeMethod, null, obj_object, args);
@@ -50,7 +61,7 @@ namespace NZ_Auto8.DM
         public string FindStrEx(int x1, int y1, int x2, int y2, string str, string color, double sim)
         {
             object[] args = new object[7];
-            object result;
+            object? result;
             args[0] = x1;
             args[1] = y1;
             args[2] = x2;
@@ -66,7 +77,7 @@ namespace NZ_Auto8.DM
         public string FindStrE(int x1, int y1, int x2, int y2, string str, string color, double sim)
         {
             object[] args = new object[7];
-            object result;
+            object? result;
             args[0] = x1;
             args[1] = y1;
             args[2] = x2;
@@ -82,7 +93,7 @@ namespace NZ_Auto8.DM
         public string DisAssemble(string asm_code, long base_addr, int is_64bit)
         {
             object[] args = new object[3];
-            object result;
+            object? result;
             args[0] = asm_code;
             args[1] = base_addr;
             args[2] = is_64bit;
@@ -94,7 +105,7 @@ namespace NZ_Auto8.DM
         public string FindPicExS(int x1, int y1, int x2, int y2, string pic_name, string delta_color, double sim, int dir)
         {
             object[] args = new object[8];
-            object result;
+            object? result;
             args[0] = x1;
             args[1] = y1;
             args[2] = x2;

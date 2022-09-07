@@ -7,10 +7,17 @@ using XE.Commands;
 
 namespace NZ_Auto8.Models
 {
+
+    /// <summary>
+    /// 找图操作，及参数
+    /// </summary>
     public class PictureEvent:BindableBase
     {
-        //图片路径
+
         private string? path;
+        /// <summary>
+        /// 图片名称
+        /// </summary>
         public string? Path
         {
             get { return path; }
@@ -20,6 +27,9 @@ namespace NZ_Auto8.Models
 
         //超时
         private int timeOut = 100;
+        /// <summary>
+        /// 找图耗时
+        /// </summary>
         public int TimeOut
         {
             get { return timeOut; }
@@ -27,8 +37,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //起始坐标
+        
         private Point stratPoint = new(1, 1);
+        /// <summary>
+        /// 起始坐标
+        /// </summary>
         public Point StartPoint
         {
             get { return stratPoint; }
@@ -37,6 +50,9 @@ namespace NZ_Auto8.Models
 
 
         private Point endPoint = new(1920, 1080);
+        /// <summary>
+        /// 结束坐标
+        /// </summary>
         public Point EndPoint
         {
             get { return endPoint; }
@@ -44,8 +60,10 @@ namespace NZ_Auto8.Models
         }
 
 
-        //相似度
         private double similarity = 0.8;
+        /// <summary>
+        /// 相似度，取值范围0.1~0.8
+        /// </summary>
         public double Similarity
         {
             get { return similarity; }
@@ -55,7 +73,7 @@ namespace NZ_Auto8.Models
 
         private int notFoundJumToIndex = -1;
         /// <summary>
-        /// 没找到 跳转到步数
+        /// 没找到 跳转到步数，,运行时计算用，界面上不可见
         /// </summary>
         public int NotFoundJumToIndex
         {
@@ -64,7 +82,7 @@ namespace NZ_Auto8.Models
         }
 
 
-        private string nofFoundTargetTag;
+        private string nofFoundTargetTag=null!;
         /// <summary>
         /// 没找到 跳转到目标标记
         /// </summary>
@@ -78,7 +96,7 @@ namespace NZ_Auto8.Models
 
         private int hasFoundJumToIndex = -1;
         /// <summary>
-        /// 找到 跳转到步数
+        /// 找到 跳转到步数,运行时计算用，界面上不可见
         /// </summary>
         public int HasFoundJumToIndex
         {
@@ -87,7 +105,7 @@ namespace NZ_Auto8.Models
         }
 
 
-        private string hasFoundTargetTag;
+        private string hasFoundTargetTag=null!;
         /// <summary>
         /// 找到 跳转到目标标记
         /// </summary>

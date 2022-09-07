@@ -15,9 +15,26 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ui:TitleBar />
-        <TextBox Grid.Row="1" x:Name="msgBox"/>
+        <ui:TitleBar  Title="调试输出：" FontSize="15"  />
+
+        <ui:Button Icon="Delete12" Content="清空" HorizontalAlignment="Center"  Click="Button_Click"/>
+
+
+
+
+        <ListView Grid.Row="2" x:Name="listView" Margin="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock  Text="{Binding .}" />
+                    </Grid>
+                  
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+     
     </Grid>
 </ui:UiWindow>

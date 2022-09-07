@@ -35,27 +35,22 @@ namespace NZ_Auto8.Models
 
 
         private int maxValue=100;
+        /// <summary>
+        /// 最大值
+        /// </summary>
         public int MaxValue
         {
             get { return maxValue; }
             set
             {
-
                 if (value<=minValue && value<0 && maxValue! > int.MaxValue)
                 {
                     MessageBox.Show($"最大值不可以小于或等于最小值,取值范围为(0~{int.MaxValue})");
                     return;
                 }
-
                 maxValue = value;
                 OnPropertyChanged();
             }
         }
-
-
-
-
-
-
     }
 }

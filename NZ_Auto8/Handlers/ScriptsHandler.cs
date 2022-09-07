@@ -12,6 +12,10 @@ using System.Timers;
 
 namespace NZ_Auto8.Handlers
 {
+
+    /// <summary>
+    /// 脚本处理器
+    /// </summary>
     public static class ScriptsHandler
     {
         private static readonly DmSoft _dm = App._host.Services.GetRequiredService<DmSoft>();
@@ -56,7 +60,7 @@ namespace NZ_Auto8.Handlers
 
                 //找色跳转
                 case EventMode.FindColor:
-                    var color = step.Color.FindColor();
+                    var color = step.Color?.FindColor();
                     return color == null ? step.Color.NotFoundJumToIndex : step.Color.HasFoundJumToIndex; //找到则返回 “找到跳转的步索引”，找不到则返回 “找不到跳转步的索引”
 
 
@@ -67,7 +71,7 @@ namespace NZ_Auto8.Handlers
 
                 //随机延迟等待
                 case EventMode.RandomDelay:
-                    Random random = new Random();
+                    var random = new Random();
                     Thread.Sleep(random.Next(step.RandomDelay.MinValue, step.RandomDelay.MaxValue));
                     return -1;
 
@@ -76,17 +80,28 @@ namespace NZ_Auto8.Handlers
                     KeyCharManage.RestKeyState(_dm);
                     return -1;
 
+                //关机  
                 case EventMode.ShutDown:
-                    Process.Start("C:/Windows/System32/shutdown.exe", "-s -t 0 ");
+                    if (step.Shutdown.IsChecked)
+                    {
+                        try
+                        {
+                            //执行光鸡命令
+                            Process.Start("C:/Windows/System32/shutdown.exe", "-s -t 0 ");
+                        }
+                        catch 
+                        {                          
+                        }                    
+                    }
                     return -1;
 
+                    //结束进程
                 case EventMode.KillApp:
                     if (step.KillApp.IsCheck )
                     {
                         KillApp(step);
                     }                   
                     return -1;
-
             }
             return -1;
         }
@@ -104,16 +119,43 @@ namespace NZ_Auto8.Handlers
         {
             try
             {
-                Process[] processes = Process.GetProcesses();
-                foreach (var item in processes)
+                //系统进程列表
+                var processes = Process.GetProcesses().ToList();
+
+                //判断是否含多个进程名
+                if (step.KillApp.ProcessName != null && step.KillApp.ProcessName.Contains("|"))
                 {
-#if DEBUG
-                    Debug.WriteLine(item.ProcessName);
-#endif
-                    if (item.ProcessName==step.KillApp.ProcessName)
+                    //目标进程名列表
+                    var targetProcessesList = step.KillApp.ProcessName.Split("|");
+
+                    if (targetProcessesList != null && targetProcessesList.Length > 0)
                     {
-                        item.Kill();
+                        foreach (var tpName in targetProcessesList)
+                        {
+                            //找出所有对应进程名的进程,并结束
+                            processes.ForEach(p =>
+                            {
+                                if (p.ProcessName == tpName)
+                                {
+                                    p.Kill();
+                                }                            
+                            });
+
+                        }
                     }
+                }
+
+                //结束单进程
+                else if(step.KillApp.ProcessName!=null && step.KillApp.ProcessName.Length>0)
+                {
+                    //找到所有指定的进程名，结束进程
+                    processes.ForEach(p =>
+                    {
+                        if (p.ProcessName== step.KillApp.ProcessName)
+                        {
+                            p.Kill();
+                        }
+                    });
                 }
             }
             catch 
@@ -167,19 +209,22 @@ namespace NZ_Auto8.Handlers
         /// </summary>
         public static void KeyboardHandler(Step step)
         {
+            var keyChar = step.Keyboard.KeyChar;
+            if (keyChar == null) return;
+
             switch (step.Keyboard.Mode)
             {
                 case KeyboardMode.KeyDown:
-                     _dm.KeyDownChar(step.Keyboard.KeyChar);
-                     KeyCharManage.SetKeyState(step.Keyboard.KeyChar, KeyboardMode.KeyDown); //记录按键状态，用于停止后恢复，避免卡键
+                     _dm.KeyDownChar(keyChar);
+                     KeyCharManage.SetKeyState(keyChar, KeyboardMode.KeyDown); //记录按键状态，用于停止后恢复，避免卡键
                     break;
                 case KeyboardMode.KeyUp:
-                    _dm.KeyUpChar(step.Keyboard.KeyChar);
-                    KeyCharManage.SetKeyState(step.Keyboard.KeyChar, KeyboardMode.KeyUp); //记录按键状态，用于停止后恢复，避免卡键
+                    _dm.KeyUpChar(keyChar);
+                    KeyCharManage.SetKeyState(keyChar, KeyboardMode.KeyUp); //记录按键状态，用于停止后恢复，避免卡键
                     break;
                 case KeyboardMode.KeyPress:
-                    _dm.KeyPressChar(step.Keyboard.KeyChar);
-                    KeyCharManage.SetKeyState(step.Keyboard.KeyChar, KeyboardMode.KeyPress); //记录按键状态，用于停止后恢复，避免卡键
+                    _dm.KeyPressChar(keyChar);
+                    KeyCharManage.SetKeyState(keyChar, KeyboardMode.KeyPress); //记录按键状态，用于停止后恢复，避免卡键
                     break;
             }
            
@@ -254,9 +299,10 @@ namespace NZ_Auto8.Handlers
                             Thread.Sleep(50);
                         }
                     }
+                    //瞬间移动
                     else
                     {
-                        //瞬间移动
+                        
                         _dm.MoveR(step.Mouse.Postion.X, step.Mouse.Postion.Y);
                     }
                     break;
@@ -281,6 +327,7 @@ namespace NZ_Auto8.Handlers
                 Thread.Sleep(100);
                 _dm.LeftClick();
                 Thread.Sleep(100);
+                //返回-1，让执行器跑下一步脚本
                 return -1;
             }
             return step.Picture.NotFoundJumToIndex;
@@ -294,7 +341,6 @@ namespace NZ_Auto8.Handlers
         public static Point FindPicture(this Step step)
         {
             var oldDateTime = DateTime.Now;
-
             while (DateTime.Now.Subtract(oldDateTime).TotalMilliseconds <step.Picture.TimeOut)
             {
                 _dm.FindPic(step.Picture.StartPoint.X, step.Picture.StartPoint.Y, step.Picture.EndPoint.X, step.Picture.EndPoint.Y, step.Picture.Path, "000000", step.Picture.Similarity, 0, out int X, out int Y);
@@ -321,7 +367,7 @@ namespace NZ_Auto8.Handlers
             while (DateTime.Now.Subtract(oldDateTime).TotalMilliseconds < color.TimeOut)
             {
                 var result = _dm.FindColor(color.StartPoint.X, color.StartPoint.Y, color.EndPoint.X, color.EndPoint.Y, color.Color, color.Similarity, 0, out int X, out int Y);
-                if (X >= 0 && Y >= 0)
+                if (result==1)
                 {
                     var p = new Point(X, Y);
                     return p;

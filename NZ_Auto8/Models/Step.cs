@@ -7,6 +7,9 @@ using XE.Commands;
 
 namespace NZ_Auto8.Models
 {
+    /// <summary>
+    /// 步骤
+    /// </summary>
     public class Step:BindableBase
     {
 
@@ -107,7 +110,7 @@ namespace NZ_Auto8.Models
         }
 
 
-        private string remark;
+        private string remark = null!;
         /// <summary>
         /// 备注
         /// </summary>
@@ -119,7 +122,7 @@ namespace NZ_Auto8.Models
 
 
         
-        private string inputText;
+        private string inputText = null!;
         /// <summary>
         /// 输入文本
         /// </summary>
@@ -133,7 +136,7 @@ namespace NZ_Auto8.Models
 
 
 
-        private string tag;
+        private string tag = null!;
         /// <summary>
         /// 跳转目标标记
         /// </summary>
@@ -145,7 +148,7 @@ namespace NZ_Auto8.Models
 
 
 
-        private RandomDelay randomDelay=new RandomDelay();
+        private RandomDelay randomDelay=new ();
         /// <summary>
         /// 随机延迟
         /// </summary>
@@ -156,7 +159,7 @@ namespace NZ_Auto8.Models
         }
 
 
-        private CloseAppEvent killApp=new CloseAppEvent();
+        private CloseAppEvent killApp=new ();
         /// <summary>
         /// 结束进程
         /// </summary>
@@ -167,7 +170,27 @@ namespace NZ_Auto8.Models
         }
 
 
+        private ShutdownEvent shutdown=new ();
+        /// <summary>
+        /// 关机事件
+        /// </summary>
+        public ShutdownEvent Shutdown
+        {
+            get { return shutdown; }
+            set { shutdown = value; OnPropertyChanged(); }
+        }
 
+
+
+        private bool isExpanded=false;
+        /// <summary>
+        /// 展开脚本内容
+        /// </summary>
+        public bool IsExpanded
+        {
+            get { return isExpanded; }
+            set { isExpanded = value; OnPropertyChanged(); }
+        }
 
     }
 
@@ -179,7 +202,9 @@ namespace NZ_Auto8.Models
 
 
 
-
+    /// <summary>
+    /// 此步的操作模式，操作类型
+    /// </summary>
     public enum EventMode
     {
         /// <summary>

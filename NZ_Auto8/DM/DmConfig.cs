@@ -14,12 +14,12 @@ namespace NZ_Auto8.DM
         /// <summary>
         /// 大漠插件免注册 DmReg.dll 路径
         /// </summary>
-        public const string DmRegDllPath = @"./Libs/QQPCRTPReg.dll";
+        public const string DmRegDllPath = @"./Libs/QQPcrtpReg.dll";
 
         /// <summary>
         /// 大漠插件 dm.dll 路径
         /// </summary>
-        public const string DmClassDllPath = @"./Libs/QQPCRTP.dll";
+        public const string DmClassDllPath = @"./Libs/QQPcrtp.dll";
 
         /// <summary>
         /// 大漠插件注册码

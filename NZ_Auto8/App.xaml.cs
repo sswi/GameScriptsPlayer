@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 
@@ -52,6 +53,15 @@ namespace NZ_Auto8
             //页面
             services.AddScoped<EditorPage>();
             services.AddScoped<EditorPageViewModel>();
+
+            services.AddScoped<PlayerPage>();
+            services.AddScoped<PlayerPageViewModel>();
+
+            services.AddScoped<HomePage>();
+
+            services.AddScoped<ToolsPage>();
+
+
         }
 
 
@@ -77,12 +87,19 @@ namespace NZ_Auto8
                 if (File.Exists(fileName))
                 {
                     var keyconfig = File.ReadAllText(Directory.GetCurrentDirectory() + "\\RegKey.txt");
-                    if (keyconfig != null)
+                    if (keyconfig != null && keyconfig.Contains("\r\n"))
                     {                  
                         var ks=keyconfig.Split("\r\n");
                         if (ks.Length >= 2)
                         {
                             result = _dm.Reg(ks[0], ks[1]);
+                            if (result!=1)
+                            {
+                                var msg = DmRegResult.RegResults.FindLast(r => result == r.ReturnCode);
+                                System.Windows.MessageBox.Show($"插件注册失败！附加码为：{ks[1]}，" + msg.ReturnMsg);
+                                return;
+                            }        
+
                         }
                     }
                 }
@@ -90,19 +107,22 @@ namespace NZ_Auto8
                 //如果本地注册码为空，则验证内置的
                 if (result==10086)
                 {
-                    result = _dm.Reg(DmConfig.DmRegCode, DmConfig.DmVerInfo);
-                }
-             
-    
-                 
+                  result = _dm.Reg(DmConfig.DmRegCode, DmConfig.DmVerInfo);
 
-                //判断联网注册是否成功 不等于1则注册失败，弹出失败信息
-                if (result!=1)
-                {
-                  var msg=  DmRegResult.RegResults.FindLast(r => result == r.ReturnCode);
-                  System.Windows.MessageBox.Show(msg.ReturnMsg);
-                  return;
+                    //判断联网注册是否成功 不等于1则注册失败，弹出失败信息
+                    if (result != 1)
+                    {
+                        var msg = DmRegResult.RegResults.FindLast(r => result == r.ReturnCode);
+                        if (msg != null)
+                        {
+                            System.Windows.MessageBox.Show($"插件注册失败！附加码为：{DmConfig.DmVerInfo}，" + msg.ReturnMsg);
+                        }
+                        return;
+                    }
                 }
+
+                //注册码验证成功
+                DmSoft.IsReg = true;
 
                 Debug.WriteLine($"注册码返回信息：{result}");
                 Debug.WriteLine($"当前使用大漠的版本：{_dm.Ver()}");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,16 @@ namespace NZ_Auto8.Views.Windows
     /// </summary>
     public partial class MessageWindow
     {
-        public MessageWindow(string text )
+        public MessageWindow()
         {
             InitializeComponent();
-            msgBox.SetBinding(TextBox.TextProperty, new Binding( text));
+            listView.ItemsSource = Messages;            
         }
+
+
+        public ObservableCollection<string> Messages { get; set; }=new ObservableCollection<string>(){ };
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel=true;
@@ -33,5 +39,9 @@ namespace NZ_Auto8.Views.Windows
             base.OnClosing(e);
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Messages.Clear();
+        }
     }
 }

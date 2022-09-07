@@ -11,6 +11,10 @@ using Wpf.Ui.Mvvm.Contracts;
 
 namespace NZ_Auto8.Services
 {
+
+    /// <summary>
+    /// 此处于脚本操作无瓜，不需任何改动，界面导航相关用的
+    /// </summary>
     public class ApplicationHostService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;

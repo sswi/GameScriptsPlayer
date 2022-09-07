@@ -7,9 +7,16 @@ using XE.Commands;
 
 namespace NZ_Auto8.Models
 {
+
+    /// <summary>
+    /// 找颜色操作的 参数
+    /// </summary>
     public class ColorEvent:BindableBase
     {
         private string color=null!;
+        /// <summary>
+        /// 颜色十六进制值，多个颜色用 | 隔开
+        /// </summary>
         public string Color
         {
             get { return color; }
@@ -17,8 +24,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //超时
+
         private int timeOut = 100;
+        /// <summary>
+        /// 寻找时长，超时时间
+        /// </summary>
         public int TimeOut
         {
             get { return timeOut; }
@@ -26,8 +36,11 @@ namespace NZ_Auto8.Models
         }
 
 
-        //起始坐标
+
         private Point stratPoint = new(1, 1);
+        /// <summary>
+        ///   起始坐标，即游戏窗口中找色范围中的 左上角的坐标
+        /// </summary>
         public Point StartPoint
         {
             get { return stratPoint; }
@@ -36,6 +49,9 @@ namespace NZ_Auto8.Models
 
 
         private Point endPoint = new(1920, 1080);
+        /// <summary>
+        /// 结束坐标，即游戏窗口中找色范围中的 右下角的坐标
+        /// </summary>
         public Point EndPoint
         {
             get { return endPoint; }
@@ -45,6 +61,9 @@ namespace NZ_Auto8.Models
 
         //相似度
         private double similarity = 1;
+        /// <summary>
+        /// 颜色的相似度 取值范围0.1~1
+        /// </summary>
         public double Similarity
         {
             get { return similarity; }
@@ -54,7 +73,7 @@ namespace NZ_Auto8.Models
 
         private int notFoundJumToIndex = -1;
         /// <summary>
-        /// 没找到 跳转到步数
+        /// 没找到 跳转到步数，此处在界面上不可见，运行前、保存前自动计算
         /// </summary>
         public int NotFoundJumToIndex
         {
@@ -63,9 +82,9 @@ namespace NZ_Auto8.Models
         }
 
 
-        private string nofFoundTargetTag;
+        private string nofFoundTargetTag=null!;
         /// <summary>
-        /// 没找到 跳转到目标标记
+        /// 没找到 跳转到目标标记，如果为空则 表示没找到 就运行下一步脚本
         /// </summary>
         public string NofFoundTargetTag
         {
@@ -81,7 +100,7 @@ namespace NZ_Auto8.Models
 
         private int hasFoundJumToIndex = -1;
         /// <summary>
-        /// 找到 跳转到步数
+        /// 找到 跳转到步数，此处在界面上不可见，运行前、保存前自动计算
         /// </summary>
         public int HasFoundJumToIndex
         {
@@ -91,9 +110,9 @@ namespace NZ_Auto8.Models
 
 
 
-        private string hasFoundTargetTag;
+        private string hasFoundTargetTag=null!;
         /// <summary>
-        /// 找到 跳转到目标标记
+        /// 找到 跳转到目标标记，如果为空则 表示找到后 就运行下一步脚本
         /// </summary>
         public string HasFoundTargetTag
         {

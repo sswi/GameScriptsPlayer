@@ -69,8 +69,7 @@
             <ui:MenuItem  DataContext="{Binding  RunButtonState}" Header="{Binding Text}" SymbolIcon="{Binding Icon}" Command="{Binding ElementName=editorPage,Path=DataContext.RunAndStopCommand}"  d:Header="调试" d:SymbolIcon="Play32"  Foreground="YellowGreen" />
             <ui:MenuItem SymbolIcon="Save20" Header="保存"  Command="{Binding SaveAsScriptCommand}" CommandParameter="save"/>
             <ui:MenuItem  Header="另存为" SymbolIcon="DocumentSave24" Command="{Binding SaveAsScriptCommand}" CommandParameter="save as" />
-            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16" Command="{Binding ShowMessageWindowCommand}"/>
-
+            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16" Command="{Binding ShowMessageWindowCommand}"/>         
         </Menu>
 
 
@@ -121,7 +120,7 @@
                             <ui:CardExpander.Header>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="150"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
@@ -130,18 +129,18 @@
                                         <Border  Background="{DynamicResource ControlFillColorDefaultBrush}"  CornerRadius="20" Width="40" Height="40" BorderThickness="1" BorderBrush="{DynamicResource ControlElevationBorderBrush}">
                                             <TextBlock Text="{Binding Index}"   FontWeight="Bold"  FontSize="11"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </Border>
-                                        <TextBlock d:Text="找颜色" Text="{Binding Mode,Converter={StaticResource EventModeToString}}" Foreground="#a07ff5" FontSize="15" VerticalAlignment="Center"  Margin="20,0,0,0"/>
+                                        <TextBlock Text="{Binding Mode,Converter={StaticResource EventModeToString}}" Foreground="#a07ff5" FontSize="15" VerticalAlignment="Center"  Margin="20,0,0,0"/>
                                     </StackPanel>
                                     <!--标记名称-->
                                     <Grid Grid.Column="1" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition MinWidth="200" MaxWidth="450"/>
-                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="250"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="标记："  VerticalAlignment="Center" Margin="0,0,5,0"  Foreground="OrangeRed"/>
-                                        <ui:TextBox  Grid.Column="1"  Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"  />
-                                        <TextBlock Grid.Column="2" Text="{Binding Remark,StringFormat='注释: {0}'}" VerticalAlignment="Center"  TextWrapping="NoWrap" HorizontalAlignment="Left" Margin="30,0,10,0"/>
+                                        <ui:TextBox  Grid.Column="1"  HorizontalAlignment="Stretch" Icon="Tag16" Text="{Binding JumTargetTag,Mode=TwoWay}" Cursor="IBeam"  />
+                                        <TextBlock Grid.Column="2" Visibility="{Binding Remark,Converter={StaticResource StringLenghtToVisibility}}" Text="{Binding Remark,StringFormat='注释: {0}'}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"   Margin="30,0,10,0"/>
                                     </Grid>
 
 

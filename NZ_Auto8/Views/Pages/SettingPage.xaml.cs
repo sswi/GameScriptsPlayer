@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace NZ_Auto8.Views.Pages
 {
     /// <summary>
-    /// PlayerPage.xaml 的交互逻辑
+    /// SettingPage.xaml 的交互逻辑
     /// </summary>
-    public partial class PlayerPage
+    public partial class SettingPage
     {
-        public PlayerPage(PlayerPageViewModel  vm)
+        public SettingPage(SettingPageViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;

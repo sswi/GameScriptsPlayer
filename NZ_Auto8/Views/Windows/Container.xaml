@@ -12,7 +12,7 @@
         WindowCornerPreference="Round"     
         WindowStartupLocation="CenterScreen"     
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"     
-        Title="哦豁" Height="500" Width="835"  Closed="UiWindow_Closed">
+        Title="ABCD" Height="500" Width="880"  Closed="UiWindow_Closed">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -61,7 +61,12 @@
         
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
-                   
+                    <ui:NavigationItem
+                        Content="设置"
+                        Icon="Settings32"
+                        PageTag="setting"
+                        PageType="{x:Type pages:SettingPage}" 
+                        />
                     <ui:NavigationItem
                         Content="主题"
                         Icon="DarkTheme24"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NZ_Auto8.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,16 @@ namespace NZ_Auto8.DM
     /// </summary>
     public class DmConfig
     {
+
+        /// <summary>
+        /// 窗口绑定模式,默认模式，适合逆战
+        /// </summary>
+        public static BindMode WindowBindMode = new BindMode()
+        {
+            Display="dx2",Mouse="dx2", Keypad="dx",Mode=0,Name="逆战"
+        };
+
+
         /// <summary>
         /// 大漠插件免注册 DmReg.dll 路径
         /// </summary>

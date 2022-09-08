@@ -38,6 +38,7 @@ namespace NZ_Auto8.ViewModels
 
         public EditorPageViewModel(DmSoft dm, GameHandle gameHandle, FileService fileService)
         {
+      
             _dm = dm;
             GameHandle = gameHandle;
             _fileService = fileService;

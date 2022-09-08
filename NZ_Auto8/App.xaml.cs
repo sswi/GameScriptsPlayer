@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using NZ_Auto8.DM;
 using NZ_Auto8.Models;
 using NZ_Auto8.Services;
@@ -10,6 +11,7 @@ using NZ_Auto8.Views.Windows;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
 using Wpf.Ui.Mvvm.Contracts;
@@ -31,7 +33,7 @@ namespace NZ_Auto8
 
 
 
-        //依赖注入
+        //IOC容器 依赖注入
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPageService, PageService>();
@@ -61,6 +63,8 @@ namespace NZ_Auto8
 
             services.AddScoped<ToolsPage>();
 
+            services.AddScoped<SettingPage>();
+            services.AddScoped<SettingPageViewModel>();
 
         }
 
@@ -128,6 +132,18 @@ namespace NZ_Auto8
                 Debug.WriteLine($"当前使用大漠的版本：{_dm.Ver()}");
                 //记录鼠标速度
                 mouseSpeed = _dm.GetMouseSpeed();
+
+                //读取窗口绑定模式设置
+                Task.Run(() =>
+                {
+                    if (File.Exists("BindModeConfig"))
+                    {
+                        var bindModeInfomation = File.ReadAllText("BindModeConfig", Encoding.UTF8);
+                        var mode = JsonConvert.DeserializeObject<BindMode>(bindModeInfomation);
+                        if (mode != null)
+                        DmConfig.WindowBindMode =mode;
+                    }   
+                });
             });
         }
 

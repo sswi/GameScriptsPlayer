@@ -116,6 +116,7 @@ namespace NZ_Auto8.Models
             {
                 while (_getCursorPosStop)
                 {
+                    //此处可根据需要 自定义快捷键代码
                     if (_dm.WaitKey(18, 1) + _dm.WaitKey(65, 1) == 2)
                     {
                         Handle = selectHandle;
@@ -175,7 +176,8 @@ namespace NZ_Auto8.Models
                     Task.Run(() =>
                     {
                         IsEnabled = false;
-                        int dm_ret = _dm.BindWindow(Handle, "dx2", "dx2", "dx", 0);
+                        
+                        int dm_ret = _dm.BindWindow(Handle, DmConfig.WindowBindMode.Display, DmConfig.WindowBindMode.Mouse, DmConfig.WindowBindMode.Keypad, DmConfig.WindowBindMode.Mode);
                         if (dm_ret == 1)
                         {
                             IsChecked = false;  //停止鼠标句柄获取
@@ -209,7 +211,7 @@ namespace NZ_Auto8.Models
         public void SetWinowToLeftTop() 
         {
           
-            if (isBind && handle>0)
+            if (isBind && handle>0 )
             {
                 _dm.MoveWindow(handle, 0, 0);
             }               

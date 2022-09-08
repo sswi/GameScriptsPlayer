@@ -22,6 +22,8 @@
             <converter:MouseModeToVisibility x:Key="MouseModeToVisibility"/>
             <converter:EventModeToString x:Key="EventModeToString"/>
             <converter:BoolToVisibility x:Key="BoolToVisibility"/>
+            <converter:StringLenghtToVisibility x:Key="StringLenghtToVisibility"/>
+            
 
             <Style TargetType="Border" x:Key="XBorderStyle">
                 <Setter Property="Background" Value="Transparent" />

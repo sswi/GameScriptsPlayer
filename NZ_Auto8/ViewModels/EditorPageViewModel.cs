@@ -193,7 +193,7 @@ namespace NZ_Auto8.ViewModels
                             break;
                         }
 
-                        //当前步数结束后等待延迟，如果等待时间超过1000ms则分段执行，方便中途手动停止时候脚本迟迟无法终止运行
+                        //当前步数结束后等待延迟，如果等待时间超过1000ms则分段执行，解决中途手动停止时候脚本迟迟无法终止运行问题
                         if (Scripts[i].EndWaitTime > 1000)
                         {
                             //注意！这步不能直接操作EndWaitTime，否则会改变 脚本的设定值
@@ -213,9 +213,9 @@ namespace NZ_Auto8.ViewModels
                                     Thread.Sleep(span);
                                     break;
                                 }
-
                             }
                         }
+                        //低于1000ms则直接运行延时等待
                         else
                         {
                             Thread.Sleep(Scripts[i].EndWaitTime);
@@ -225,22 +225,38 @@ namespace NZ_Auto8.ViewModels
 
                     //脚本运行结束 
                     IsRun = false;
-                    //更改界面 调试按钮状态
-                    RunButtonState.SetRunButtonState(IsRun);
+                    //恢复鼠标键盘设置
+                    RestMouseAndKeyConfig();
                 });
                 //开始线程
                 thread.Start();
             }
 
+            //脚本到此运行结束
+            //恢复鼠标键盘设置
+            RestMouseAndKeyConfig();
+        });
 
-            //停止脚本
+
+
+        /// <summary>
+        /// 回复鼠标、键盘原有设置
+        /// </summary>
+        private void RestMouseAndKeyConfig()
+        {
             //恢复鼠标速度
             _dm.SetMouseSpeed(App.mouseSpeed);
             //开启鼠标高精度 
             _dm.EnableMouseAccuracy(1);
             //恢复键状态，避免卡键
             KeyCharManage.RestKeyState(_dm);
-        });
+        }
+
+
+
+
+
+
 
         //游戏窗口数据
         public GameHandle GameHandle { get; set; }

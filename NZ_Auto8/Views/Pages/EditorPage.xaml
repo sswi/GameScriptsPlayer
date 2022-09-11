@@ -101,13 +101,15 @@
                     <controls:FindPicView/>
                     <controls:JumView />
                     <controls:FindPicClickView/>
+                    <controls:FindColorView/>
+                    <controls:InputTextView/>
+                    <controls:RandomDelayView/>
+                    <controls:KeyboardRevertedView/>
+                    <controls:ShutdownView/>
+                    <controls:KillAppView/>
+                    <controls:RandomJumpView/>
                 </StackPanel>
-                <controls:FindColorView/>
-                <controls:InputTextView/>
-                <controls:RandomDelayView/>
-                <controls:KeyboardRevertedView/>
-                <controls:ShutdownView/>
-                <controls:KillAppView/>
+
             </StackPanel>
         </Grid>
 
@@ -174,7 +176,7 @@
                                 <controls:KeyboardRevertedView/>
                                 <controls:ShutdownView/>
                                 <controls:KillAppView/>
-
+                                <controls:RandomJumpView/>
 
 
                                 <Grid Grid.Row="1">

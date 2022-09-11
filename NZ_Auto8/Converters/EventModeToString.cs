@@ -28,6 +28,7 @@ namespace NZ_Auto8.Converters
                 EventMode.KeyboardReverted=>"按键复归",
                 EventMode.ShutDown => "关机",
                 EventMode.KillApp => "结束进程",
+                EventMode.RandomJump => "随机跳转",
                 _ => "未知步骤",
             };
         }

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="NZ_Auto8.Views.CustomView.RandomJumpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NZ_Auto8.Views.CustomView"
+             mc:Ignorable="d" 
+             xmlns:models="clr-namespace:NZ_Auto8.Models" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             d:DataContext="{d:DesignInstance Type=models:Step}"
+             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding Mode,Converter={StaticResource EventModeToVisibility},ConverterParameter=12}">
+    <StackPanel >
+
+        <TextBlock  Text="跳转目标标记：(最少2个标记，用|隔开)"  VerticalAlignment="Center"/>
+        <ui:TextBox Grid.Row="1"  Icon="Target16" Text="{Binding RandomJump.TargetTags,Mode=TwoWay}"  Cursor="IBeam" PlaceholderText="如：打怪|喝药|回城" Margin="0,5,0,15"/>
+        <TextBlock Text="循环次数 (0=无限循环):" VerticalAlignment="Center" />
+        <ui:NumberBox Grid.Column="1" IntegersOnly="True" Min="0" Step="1"   Text="{Binding RandomJump.NumberOfCycles,Mode=TwoWay}"   Cursor="IBeam" Margin="0,5,0,10" />
+
+
+    </StackPanel>
+</UserControl>

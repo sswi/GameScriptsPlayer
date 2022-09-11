@@ -31,9 +31,7 @@ http://pan.gzmtr.cc/file/2730b15o27zyvj055tw3kli5cdd9cjl2#
         (程序内置了吧友分享的注册码，但可能随时失效)
     3.注册码添加方式一：程序设置中添加 附加码+激活码 点击应用检测注册码可用性
     4.注册码添加方式二：内置法，在源码DM/DmConfig.cs类中添加 注册码：DmRegCode=xxxxx  附加码 DmVerInfo=xxxxx
-      例：
-         fujiama1232  
-         zhucema1245abcdechaskdhaskdhkd  
+
 
 
 一、需要右键“以管理员身份运行”  

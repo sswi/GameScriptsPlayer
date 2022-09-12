@@ -18,7 +18,7 @@ namespace NZ_Auto8.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            return null!;
         }
     }
 }

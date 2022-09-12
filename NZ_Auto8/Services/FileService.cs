@@ -55,10 +55,10 @@ namespace NZ_Auto8.Services
             //如果文件不存在则返回
             if (!File.Exists(_fileName))
             {
-                return null;
+                return null!;
             }
             var stepList = JsonConvert.DeserializeObject<List<Step>>(File.ReadAllText(_fileName));
-            return stepList;
+            return stepList!;
         }
 
 

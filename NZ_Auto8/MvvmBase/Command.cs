@@ -14,7 +14,7 @@ namespace XE.Commands
 
         private readonly Action<object> _execute;
 
-        private readonly WeakEventManager _weakEventManager = new WeakEventManager();
+        private readonly WeakEventManager _weakEventManager = new ();
 
         //
         // 摘要:
@@ -24,7 +24,9 @@ namespace XE.Commands
         // 言论：
         //     To be added.
 
+#pragma warning disable CS8612 // 类型中引用类型的为 Null 性与隐式实现的成员不匹配。
         public event EventHandler CanExecuteChanged
+#pragma warning restore CS8612 // 类型中引用类型的为 Null 性与隐式实现的成员不匹配。
 
         {
             add
@@ -38,11 +40,9 @@ namespace XE.Commands
         }
 
 
-        public Command(Action<object> execute)
-
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        }
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+        public Command(Action<object> execute) => _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
 
         public Command(Action execute)
             : this((Action<object>)delegate
@@ -97,7 +97,9 @@ namespace XE.Commands
         //     If the Command was created with non-generic execute parameter, the parameter
         //     of this method is ignored.
 
+#pragma warning disable CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
         public bool CanExecute(object parameter)
+#pragma warning restore CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
 
         {
             if (_canExecute != null)
@@ -120,7 +122,9 @@ namespace XE.Commands
         //     If the Command was created with non-generic execute parameter, the parameter
         //     of this method is ignored.
 
+#pragma warning disable CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
         public void Execute(object parameter) => _execute(parameter);
+#pragma warning restore CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
 
 
         //
@@ -151,7 +155,7 @@ namespace XE.Commands
             }
         }
 
-        private readonly Dictionary<string, List<Subscription>> _eventHandlers = new Dictionary<string, List<Subscription>> ();
+        private readonly Dictionary<string, List<Subscription>> _eventHandlers = new  ();
 
         //
         // 摘要:
@@ -182,9 +186,8 @@ namespace XE.Commands
                 throw new ArgumentNullException(nameof(handler));
             }
 
-#pragma warning disable CS8604 // 引用类型参数可能为 null。
-            AddEventHandler(eventName, handler.Target, handler.GetMethodInfo());
-#pragma warning restore CS8604 // 引用类型参数可能为 null。
+            AddEventHandler(eventName, handler.Target!, handler.GetMethodInfo());
+
         }
 
         //
@@ -212,9 +215,9 @@ namespace XE.Commands
                 throw new ArgumentNullException(nameof(handler));
             }
 
-#pragma warning disable CS8604 // 引用类型参数可能为 null。
-            AddEventHandler(eventName, handler.Target, handler.GetMethodInfo());
-#pragma warning restore CS8604 // 引用类型参数可能为 null。
+
+            AddEventHandler(eventName, handler.Target!, handler.GetMethodInfo());
+
         }
 
         //
@@ -235,10 +238,10 @@ namespace XE.Commands
         //     To be added.
         public void HandleEvent(object sender, object args, string eventName)
         {
-            List<(object, MethodInfo)> list = new List<(object, MethodInfo)> ();
-            List<Subscription> list2 = new List<Subscription> ();
+            List<(object, MethodInfo)> list = new ();
+            List<Subscription> list2 = new  ();
 
-            if (_eventHandlers.TryGetValue(eventName, out List<Subscription> value))
+            if (_eventHandlers.TryGetValue(eventName, out List<Subscription>? value))
 
             {
                 for (int i = 0; i < value.Count; i++)
@@ -247,13 +250,13 @@ namespace XE.Commands
                     if (item.Subscriber == null)
                     {
 
-                        list.Add((null, item.Handler));
+                        list.Add((null!, item.Handler));
 
                         continue;
                     }
 
 
-                    object target = item.Subscriber.Target;
+                    object target = item.Subscriber.Target!;
 
                     if (target == null)
                     {
@@ -313,7 +316,7 @@ namespace XE.Commands
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            RemoveEventHandler(eventName, handler.Target, handler.GetMethodInfo());
+            RemoveEventHandler(eventName, handler.Target!, handler.GetMethodInfo());
 
         }
 
@@ -343,14 +346,14 @@ namespace XE.Commands
             }
 
 
-            RemoveEventHandler(eventName, handler.Target, handler.GetMethodInfo());
+            RemoveEventHandler(eventName, handler.Target!, handler.GetMethodInfo());
 
         }
 
         private void AddEventHandler(string eventName, object handlerTarget, MethodInfo methodInfo)
         {
 
-            if (!_eventHandlers.TryGetValue(eventName, out List<Subscription> value))
+            if (!_eventHandlers.TryGetValue(eventName, out List<Subscription>? value))
 
             {
                 value = new List<Subscription>();
@@ -360,7 +363,7 @@ namespace XE.Commands
             if (handlerTarget == null)
             {
 
-                value.Add(new Subscription(null, methodInfo));
+                value.Add(new Subscription(null!, methodInfo));
 
             }
             else

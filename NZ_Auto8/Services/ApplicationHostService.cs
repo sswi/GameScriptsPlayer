@@ -20,21 +20,22 @@ namespace NZ_Auto8.Services
         private readonly IServiceProvider _serviceProvider;
         private readonly INavigationService _navigationService;
         private readonly IPageService _pageService;
-        private readonly IThemeService _themeService;
-        private readonly ITaskBarService _taskBarService;
+        //private readonly IThemeService _themeService;
+        //private readonly ITaskBarService _taskBarService;
 
         private INavigationWindow _navigationWindow;
 
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         public ApplicationHostService(IServiceProvider serviceProvider, INavigationService navigationService,
-            IPageService pageService, IThemeService themeService,
-            ITaskBarService taskBarService)
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+            IPageService pageService)
         {
             // If you want, you can do something with these services at the beginning of loading the application.
             _serviceProvider = serviceProvider;
             _navigationService = navigationService;
             _pageService = pageService;
-            _themeService = themeService;
-            _taskBarService = taskBarService;
+            //_themeService = themeService;
+            //_taskBarService = taskBarService;
         }
 
         /// <summary>
@@ -66,7 +67,9 @@ namespace NZ_Auto8.Services
 
             if (!Application.Current.Windows.OfType<Container>().Any())
             {
+#pragma warning disable CS8601 // 引用类型赋值可能为 null。
                 _navigationWindow = _serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow;
+#pragma warning restore CS8601 // 引用类型赋值可能为 null。
                 _navigationWindow!.ShowWindow();
 
                 // NOTICE: You can set this service directly in the window 

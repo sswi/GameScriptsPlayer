@@ -36,7 +36,9 @@ namespace NZ_Auto8.ViewModels
         //选中行
         private int _SelectIndex = 0;
 
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         public EditorPageViewModel(DmSoft dm, GameHandle gameHandle, FileService fileService)
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         {
 
             _dm = dm;
@@ -293,7 +295,7 @@ namespace NZ_Auto8.ViewModels
             else
             {
                 //清空
-                if (System.Windows.MessageBox.Show("是否要清空所有？", "清空脚本", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                if (MessageBox.Show("是否要清空所有？", "清空脚本", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     Scripts.Clear();
                 }
@@ -305,7 +307,7 @@ namespace NZ_Auto8.ViewModels
         });
 
         //设置启动行
-        public Command SetStartIndexCommand => new((object o) =>
+        public Command SetStartIndexComman => new((object o) =>
         {
             StartIndex = ((Step)o).Index;
         });
@@ -494,10 +496,7 @@ namespace NZ_Auto8.ViewModels
         //弹出调试窗口
         public Command ShowMessageWindowCommand => new(() =>
         {
-            if (messageWindow == null)
-            {
-                messageWindow = new MessageWindow();
-            }
+            messageWindow ??= new MessageWindow();
             messageWindow.Show();
         });
 
@@ -532,7 +531,7 @@ namespace NZ_Auto8.ViewModels
             {
                 return;
             }
-            _fileService.SaveScript(o.ToString(), Scripts);
+            _fileService.SaveScript(o.ToString()!, Scripts);
         });
 
 
@@ -548,157 +547,157 @@ namespace NZ_Auto8.ViewModels
             switch (step.Mode)
             {
                 case EventMode.Keyboard:
-                    //step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    //step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.Mouse:
-                    step.Keyboard = null;
-                    // step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    // step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.Sleep:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.FindPicture:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    // step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    // step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.Jump:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    // step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    // step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.FindPictureClick:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    // step.Picture = null;
-                    step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    // step.Picture = null!;
+                    step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.FindColor:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    // step.Color = null;
-                    step.InputText = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    // step.Color = null!;
+                    step.InputText = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
                     break;
                 case EventMode.Input:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
+                    //step.InputText = null!;
 
                     break;
                 case EventMode.RandomDelay:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;
+                    step.RandomJump = null!;
+                    //step.InputText = null!;
                     break;
                 case EventMode.KeyboardReverted:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.Shutdown = null;
-                    step.RandomJump = null;
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.Shutdown = null!;                    
+                    step.RandomJump = null!;
+                    //step.InputText = null!;
                     break;
                 case EventMode.KillApp:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.Shutdown = null;
-                    step.RandomDelay = null;
-                    step.RandomJump = null;
-                    // step.KillApp = null;
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.Shutdown = null!;
+                    step.RandomDelay = null!;
+                    step.RandomJump = null!;
+                    // step.KillApp = null!;
+                    //step.InputText = null!;
                     break;
                 case EventMode.ShutDown:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;
-                    step.RandomJump = null;
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;
+                    step.RandomJump = null!;
+                    //step.InputText = null!;
                     break;
                 case EventMode.RandomJump:
-                    step.Keyboard = null;
-                    step.Mouse = null;
-                    step.Jump = null;
-                    step.Picture = null;
-                    step.Color = null;
-                    step.RandomDelay = null;
-                    step.KillApp = null;                    
-                    //step.InputText = null;
+                    step.Keyboard = null!;
+                    step.Mouse = null!;
+                    step.Jump = null!;
+                    step.Picture = null!;
+                    step.Color = null!;
+                    step.RandomDelay = null!;
+                    step.KillApp = null!;                    
+                    //step.InputText = null!;
                     break;
             }
             return step;

@@ -24,13 +24,13 @@ namespace NZ_Auto8.Models
 
 
 
-        private string targetTag;
+        private string? targetTag;
         /// <summary>
         /// 跳转到 目标标记
         /// </summary>
         public string TargetTag
         {
-            get { return targetTag; }
+            get { return targetTag!; }
             set { targetTag = value; OnPropertyChanged(); }
         }
 

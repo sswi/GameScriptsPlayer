@@ -349,7 +349,7 @@ namespace NZ_Auto8.Handlers
             var oldDateTime = DateTime.Now;
             while (DateTime.Now.Subtract(oldDateTime).TotalMilliseconds <step.Picture.TimeOut)
             {
-                _dm.FindPic(step.Picture.StartPoint.X, step.Picture.StartPoint.Y, step.Picture.EndPoint.X, step.Picture.EndPoint.Y, step.Picture.Path, "000000", step.Picture.Similarity, 0, out int X, out int Y);
+                _dm.FindPic(step.Picture.StartPoint.X, step.Picture.StartPoint.Y, step.Picture.EndPoint.X, step.Picture.EndPoint.Y, step.Picture.Path!, "000000", step.Picture.Similarity, 0, out int X, out int Y);
                 if (X >= 0 && Y >= 0)
                 {
                     return new Point(X, Y);
@@ -357,7 +357,7 @@ namespace NZ_Auto8.Handlers
                 // 按  1000/1=1000帧计算
                 Thread.Sleep(1);
             }
-            return null;
+            return null!;
         }
 
 
@@ -381,7 +381,7 @@ namespace NZ_Auto8.Handlers
                 // 按  1000/1=1000帧计算
                 Thread.Sleep(1);
             }
-            return null;
+            return null!;
         }
 
 

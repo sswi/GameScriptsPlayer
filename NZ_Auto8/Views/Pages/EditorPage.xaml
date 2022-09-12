@@ -24,9 +24,9 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </Page.Triggers>
-    
-    
-    
+
+
+
     <Grid x:Name="editorPage" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -69,7 +69,7 @@
             <ui:MenuItem  DataContext="{Binding  RunButtonState}" Header="{Binding Text}" SymbolIcon="{Binding Icon}" Command="{Binding ElementName=editorPage,Path=DataContext.RunAndStopCommand}"  d:Header="调试" d:SymbolIcon="Play32"  Foreground="YellowGreen" />
             <ui:MenuItem SymbolIcon="Save20" Header="保存"  Command="{Binding SaveAsScriptCommand}" CommandParameter="save"/>
             <ui:MenuItem  Header="另存为" SymbolIcon="DocumentSave24" Command="{Binding SaveAsScriptCommand}" CommandParameter="save as" />
-            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16" Command="{Binding ShowMessageWindowCommand}"/>         
+            <ui:MenuItem  Header="调试窗口" SymbolIcon="Window16" Command="{Binding ShowMessageWindowCommand}"/>
         </Menu>
 
 

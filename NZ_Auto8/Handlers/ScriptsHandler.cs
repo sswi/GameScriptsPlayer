@@ -102,6 +102,12 @@ namespace NZ_Auto8.Handlers
                         KillApp(step);
                     }                   
                     return -1;
+
+                    //随机跳转
+                case EventMode.RandomJump:
+                    return step.RandomJumpHandler();
+                    
+
             }
             return -1;
         }
@@ -377,6 +383,56 @@ namespace NZ_Auto8.Handlers
             }
             return null;
         }
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// 获取随机跳转 中的跳转编号
+        /// </summary>
+        /// <param name="randomJump"></param>
+        /// <returns></returns>
+        public static int RandomJumpHandler(this Step step)
+        {
+            var randomJump=step.RandomJump;
+            //如果循环次数为0，表示无限循环，直接返回跳转的步数
+            if (randomJump.NumberOfCycles == 0)
+            {
+                var random = new Random();
+                var index = random.Next(0, randomJump.RandomJumpTargets.Count);
+                return randomJump.RandomJumpTargets[index].TargetIndex;
+            }
+            else
+            {
+                //若已跳转次数大于或等于 设置的跳转次数 则清空跳转 次数，返回 -1，下一步,  否则 返回跳转 步数索引，已跳转次数+1
+                if (randomJump.CyclesCount >= randomJump.NumberOfCycles - 1)
+                {
+                    randomJump.CyclesCount = 0;
+                    return -1;
+                }
+                else
+                {
+                    randomJump.CyclesCount++;
+                    var random = new Random();
+                    var index = random.Next(0, randomJump.RandomJumpTargets.Count);
+                    return randomJump.RandomJumpTargets[index].TargetIndex;
+                }
+            }
+
+
+
+
+        }
+
+
+
+
+
 
 
 

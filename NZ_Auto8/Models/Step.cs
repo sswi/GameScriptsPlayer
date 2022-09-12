@@ -192,6 +192,21 @@ namespace NZ_Auto8.Models
             set { isExpanded = value; OnPropertyChanged(); }
         }
 
+
+        private RandomJumpEvent randomJump = new ();
+        /// <summary>
+        /// 随机跳转
+        /// </summary>
+        public RandomJumpEvent RandomJump
+        {
+            get { return randomJump; }
+            set { randomJump = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
     }
 
 
@@ -254,6 +269,10 @@ namespace NZ_Auto8.Models
         /// <summary>
         /// 结束进程
         /// </summary>
-        KillApp=11
+        KillApp=11,
+        /// <summary>
+        /// 随机跳转
+        /// </summary>
+        RandomJump=12,
     }
 }

@@ -18,7 +18,7 @@ namespace NZ_Auto8.DM
         /// </summary>
         public static BindMode WindowBindMode = new BindMode()
         {
-            Display="dx2",Mouse="dx2", Keypad="dx",Mode=0,Name="逆战"
+            Display="dx2",Mouse="dx2", Keypad="dx",Mode=11,Name="逆战"
         };
 
 

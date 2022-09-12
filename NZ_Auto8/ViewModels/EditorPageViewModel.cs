@@ -38,7 +38,7 @@ namespace NZ_Auto8.ViewModels
 
         public EditorPageViewModel(DmSoft dm, GameHandle gameHandle, FileService fileService)
         {
-      
+
             _dm = dm;
             GameHandle = gameHandle;
             _fileService = fileService;
@@ -101,7 +101,7 @@ namespace NZ_Auto8.ViewModels
         /// <summary>
         /// 当前支持的 操作的名称列表
         /// </summary>
-        public List<string> EventNames { get; set; } = new() { "键盘事件", "鼠标事件", "延迟事件", "限时找图", "跳转语句", "找图点击", "限时找色", "文本输入","随机延迟等待", "按键复归","关机","结束进程" };
+        public List<string> EventNames { get; set; } = new() { "键盘事件", "鼠标事件", "延迟事件", "限时找图", "跳转语句", "找图点击", "限时找色", "文本输入", "随机延迟等待", "按键复归", "关机", "结束进程", "随机跳转" };
 
 
         //调试按钮状态，及图标
@@ -154,7 +154,7 @@ namespace NZ_Auto8.ViewModels
                     //设置鼠标速度=10
                     _dm.SetMouseSpeed(10);
 
-             
+
                     //脚本运行
                     for (int i = startIndex; i < Scripts.Count; i++)
                     {
@@ -162,15 +162,15 @@ namespace NZ_Auto8.ViewModels
                         if (!IsRun) break;
 
                         //调试信息 创建一个线程线程去输出，保证脚本运行最低延迟
-                        if (Scripts[i].Remark!=null && Scripts[i].Remark.Length>0)
+                        if (Scripts[i].Remark != null && Scripts[i].Remark.Length > 0)
                         {
                             Task.Run(() =>
                             {
                                 DebugInformation = $"[{Scripts[i].Index}].{Scripts[i].Remark}";
-                            });                            
+                            });
                         }
-                 
-                        
+
+
                         //“步”的执行，此处脚本正式开始运行，接受返回值，result=-1  下一步，result >=0的为跳转                        
                         var result = Scripts[i].Run();
 
@@ -193,14 +193,14 @@ namespace NZ_Auto8.ViewModels
                             break;
                         }
 
-                        //当前步数结束后等待延迟，如果等待时间超过1000ms则分段执行，方便中途手动停止时候脚本迟迟无法终止运行
-                        if (Scripts[i].EndWaitTime>1000)
+                        //当前步数结束后等待延迟，如果等待时间超过1000ms则分段执行，解决中途手动停止时候脚本迟迟无法终止运行问题
+                        if (Scripts[i].EndWaitTime > 1000)
                         {
                             //注意！这步不能直接操作EndWaitTime，否则会改变 脚本的设定值
                             int span = Scripts[i].EndWaitTime;
-                            while (span>=0)
+                            while (span >= 0)
                             {
-                                if (!IsRun) break;               
+                                if (!IsRun) break;
                                 //如果时间大于1000 时候，就减少1s
                                 if (span > 1000)
                                 {
@@ -213,34 +213,50 @@ namespace NZ_Auto8.ViewModels
                                     Thread.Sleep(span);
                                     break;
                                 }
-                                
                             }
                         }
+                        //低于1000ms则直接运行延时等待
                         else
                         {
                             Thread.Sleep(Scripts[i].EndWaitTime);
                         }
-                        
+
                     }
 
                     //脚本运行结束 
                     IsRun = false;
-                    //更改界面 调试按钮状态
-                    RunButtonState.SetRunButtonState(IsRun);
+                    //恢复鼠标键盘设置
+                    RestMouseAndKeyConfig();
                 });
                 //开始线程
                 thread.Start();
             }
 
+            //脚本到此运行结束
+            //恢复鼠标键盘设置
+            RestMouseAndKeyConfig();
+        });
 
-            //停止脚本
+
+
+        /// <summary>
+        /// 回复鼠标、键盘原有设置
+        /// </summary>
+        private void RestMouseAndKeyConfig()
+        {
             //恢复鼠标速度
             _dm.SetMouseSpeed(App.mouseSpeed);
             //开启鼠标高精度 
             _dm.EnableMouseAccuracy(1);
             //恢复键状态，避免卡键
             KeyCharManage.RestKeyState(_dm);
-        });
+        }
+
+
+
+
+
+
 
         //游戏窗口数据
         public GameHandle GameHandle { get; set; }
@@ -268,7 +284,7 @@ namespace NZ_Auto8.ViewModels
                 Scripts.Add(DleteNotNeedProperty(step));
             }
             else if (o.ToString() == "insert")
-            {         
+            {
                 //插入到所选位置的前边
                 step.Index = _SelectIndex;
 
@@ -306,90 +322,128 @@ namespace NZ_Auto8.ViewModels
 
 
 
-          /// <summary>
-          /// 重定向跳转
-          /// </summary>
-          /// <param name="mode"></param>
-          /// <param name="s"></param>
+        /// <summary>
+        /// 重定向跳转
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="s"></param>
         private bool RestJump()
         {
-            foreach (var item in Scripts)           
+            //将脚本步数转换为列表，好用lamda操作
+            var list = Scripts.ToList();
+
+
+            foreach (var item in Scripts)
             {
 
-                    //找图跳转
-                    if (item.Mode == EventMode.FindPicture || item.Mode == EventMode.FindPictureClick)
-                    {
-                        var list = Scripts.ToList();
-                        var s = list.FindLast(s => item.Picture.NofFoundTargetTag!=null && s.JumTargetTag == item.Picture.NofFoundTargetTag  );
-                        if (s != null)
-                        {
-                            item.Picture.NotFoundJumToIndex = s.Index;
-                        }
-                        else if (item.Picture.NofFoundTargetTag != null && item.Picture.NofFoundTargetTag.Length>0)
-                        {
-                            MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，未找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
-                            return false;
-                        }
+                //找图跳转
+                if (item.Mode == EventMode.FindPicture || item.Mode == EventMode.FindPictureClick)
+                {
 
-                        s = list.FindLast(s => item.Picture.HasFoundTargetTag != null && s.JumTargetTag == item.Picture.HasFoundTargetTag);
-                        if (s != null)
-                        {
-                            item.Picture.HasFoundJumToIndex = s.Index;
-                        }
-                        else if (item.Picture.HasFoundTargetTag != null && item.Picture.HasFoundTargetTag.Length>0)
+                    var s = list.FindLast(s => item.Picture.NofFoundTargetTag != null && s.JumTargetTag == item.Picture.NofFoundTargetTag);
+                    if (s != null)
                     {
-                            MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
-                            return false;
-                        }
-
+                        item.Picture.NotFoundJumToIndex = s.Index;
+                    }
+                    else if (item.Picture.NofFoundTargetTag != null && item.Picture.NofFoundTargetTag.Length > 0)
+                    {
+                        MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，未找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
+                        return false;
                     }
 
-
-                    //找色跳转
-                    else if (item.Mode == EventMode.FindColor)
+                    s = list.FindLast(s => item.Picture.HasFoundTargetTag != null && s.JumTargetTag == item.Picture.HasFoundTargetTag);
+                    if (s != null)
                     {
-
-                        var list = Scripts.ToList();
-                        var s = list.FindLast(s => item.Color.NofFoundTargetTag != null && s.JumTargetTag == item.Color.NofFoundTargetTag);
-                        if (s != null)
-                        {
-                            item.Color.NotFoundJumToIndex = s.Index;
-                        }
-                        else if (item.Color.NofFoundTargetTag != null && item.Color.NofFoundTargetTag.Length>0)
+                        item.Picture.HasFoundJumToIndex = s.Index;
+                    }
+                    else if (item.Picture.HasFoundTargetTag != null && item.Picture.HasFoundTargetTag.Length > 0)
                     {
-                            MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，未找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
-                            return false;
-                        }
-                        s = list.FindLast(s => item.Color.HasFoundTargetTag != null && s.JumTargetTag == item.Color.HasFoundTargetTag);
-                        if (s != null)
-                        {
-                            item.Color.HasFoundJumToIndex = s.Index;
-                        }
-                        else if (item.Color.HasFoundTargetTag != null && item.Color.HasFoundTargetTag.Length > 0)
-                    {
-                            MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
-                            return false;
-                        }
-
+                        MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
+                        return false;
                     }
 
-                    //纯跳转
-                    else if(item.Mode== EventMode.Jump)
+                }
+
+                //找色跳转
+                else if (item.Mode == EventMode.FindColor)
+                {
+
+
+                    var s = list.FindLast(s => item.Color.NofFoundTargetTag != null && s.JumTargetTag == item.Color.NofFoundTargetTag);
+                    if (s != null)
                     {
-                        var list = Scripts.ToList();
-                        var s = list.FindLast(s => item.Jump.TargetTag != null && s.JumTargetTag == item.Jump.TargetTag);
-                        if (s != null)
-                        {
-                            item.Jump.JumToIndex = s.Index;
-                        }
-                        else if (item.Jump.TargetTag != null && item.Jump.TargetTag.Length > 0 )
-                        {
-                            MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
-                            return false;
-                        }
-                        item.Jump.CyclesCount = 0;
+                        item.Color.NotFoundJumToIndex = s.Index;
                     }
-  
+                    else if (item.Color.NofFoundTargetTag != null && item.Color.NofFoundTargetTag.Length > 0)
+                    {
+                        MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，未找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
+                        return false;
+                    }
+                    s = list.FindLast(s => item.Color.HasFoundTargetTag != null && s.JumTargetTag == item.Color.HasFoundTargetTag);
+                    if (s != null)
+                    {
+                        item.Color.HasFoundJumToIndex = s.Index;
+                    }
+                    else if (item.Color.HasFoundTargetTag != null && item.Color.HasFoundTargetTag.Length > 0)
+                    {
+                        MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
+                        return false;
+                    }
+
+                }
+
+                //纯跳转
+                else if (item.Mode == EventMode.Jump)
+                {
+
+                    var s = list.FindLast(s => item.Jump.TargetTag != null && s.JumTargetTag == item.Jump.TargetTag);
+                    if (s != null)
+                    {
+                        item.Jump.JumToIndex = s.Index;
+                    }
+                    else if (item.Jump.TargetTag != null && item.Jump.TargetTag.Length > 0)
+                    {
+                        MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
+                        return false;
+                    }
+                    item.Jump.CyclesCount = 0;
+                }
+
+                //随机跳转
+                else if (item.Mode == EventMode.RandomJump)
+                {
+                    //先将跳转标记转换成跳转步数
+                    //判断是否为空或者目标少于2个
+                    if (item.RandomJump.TargetTags != null && item.RandomJump.TargetTags.Length > 0 && item.RandomJump.TargetTags.Contains('|'))
+                    {
+
+                        var tags = item.RandomJump.TargetTags.Split('|');
+                        foreach (var tag in tags)
+                        {
+                            //找出对应标签的序号
+                            var tagIndex = list.Find(s => s.JumTargetTag == tag);
+                            if (tagIndex != null)
+                            {
+                                var target = new RandomJumpTarget() { TargetTag = tag, TargetIndex = tagIndex.Index };
+                                item.RandomJump.RandomJumpTargets.Add(target);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"第{item.Index}步，随机跳转目标标记 {tag} 无法找到");
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"第{item.Index}步，随机跳转目标少于2个，无法随机跳转");
+                        return false;
+                    }
+                }
+
+
+
             }
             return true;
         }
@@ -419,17 +473,17 @@ namespace NZ_Auto8.ViewModels
         public string DebugInformation
         {
             get { return debuginfo; }
-            set 
-            { 
+            set
+            {
                 debuginfo = value;
-                if (messageWindow!=null)
+                if (messageWindow != null)
                 {
                     Application.Current.Dispatcher.BeginInvoke(() =>
                     {
                         messageWindow.Messages.Insert(0, value);
-                    });            
+                    });
                 }
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 
@@ -440,11 +494,11 @@ namespace NZ_Auto8.ViewModels
         //弹出调试窗口
         public Command ShowMessageWindowCommand => new(() =>
         {
-            if (messageWindow==null)
+            if (messageWindow == null)
             {
                 messageWindow = new MessageWindow();
             }
-            messageWindow.Show();  
+            messageWindow.Show();
         });
 
 
@@ -460,7 +514,7 @@ namespace NZ_Auto8.ViewModels
                 Tags.Clear();
                 scriptsList.ForEach(s =>
                 {
-                    if (s.JumTargetTag?.Length>0)
+                    if (s.JumTargetTag?.Length > 0)
                     {
                         Tags.Add(s.JumTargetTag);
                     }
@@ -503,6 +557,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.Mouse:
                     step.Keyboard = null;
@@ -514,6 +569,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.Sleep:
                     step.Keyboard = null;
@@ -525,6 +581,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.FindPicture:
                     step.Keyboard = null;
@@ -536,6 +593,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.Jump:
                     step.Keyboard = null;
@@ -547,6 +605,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.FindPictureClick:
                     step.Keyboard = null;
@@ -558,6 +617,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.FindColor:
                     step.Keyboard = null;
@@ -569,6 +629,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     break;
                 case EventMode.Input:
                     step.Keyboard = null;
@@ -579,7 +640,9 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     //step.InputText = null;
+
                     break;
                 case EventMode.RandomDelay:
                     step.Keyboard = null;
@@ -589,6 +652,7 @@ namespace NZ_Auto8.ViewModels
                     step.Color = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     //step.InputText = null;
                     break;
                 case EventMode.KeyboardReverted:
@@ -600,6 +664,7 @@ namespace NZ_Auto8.ViewModels
                     step.RandomDelay = null;
                     step.KillApp = null;
                     step.Shutdown = null;
+                    step.RandomJump = null;
                     //step.InputText = null;
                     break;
                 case EventMode.KillApp:
@@ -609,8 +674,9 @@ namespace NZ_Auto8.ViewModels
                     step.Picture = null;
                     step.Color = null;
                     step.Shutdown = null;
-                    step.RandomDelay = null;                    
-                   // step.KillApp = null;
+                    step.RandomDelay = null;
+                    step.RandomJump = null;
+                    // step.KillApp = null;
                     //step.InputText = null;
                     break;
                 case EventMode.ShutDown:
@@ -618,9 +684,20 @@ namespace NZ_Auto8.ViewModels
                     step.Mouse = null;
                     step.Jump = null;
                     step.Picture = null;
-                    step.Color = null;              
+                    step.Color = null;
                     step.RandomDelay = null;
                     step.KillApp = null;
+                    step.RandomJump = null;
+                    //step.InputText = null;
+                    break;
+                case EventMode.RandomJump:
+                    step.Keyboard = null;
+                    step.Mouse = null;
+                    step.Jump = null;
+                    step.Picture = null;
+                    step.Color = null;
+                    step.RandomDelay = null;
+                    step.KillApp = null;                    
                     //step.InputText = null;
                     break;
             }
@@ -636,7 +713,7 @@ namespace NZ_Auto8.ViewModels
         {
             foreach (var item in Scripts)
             {
-                if (item.JumTargetTag==tag)
+                if (item.JumTargetTag == tag)
                 {
                     return true;
                 }

@@ -18,6 +18,23 @@ namespace NZ_Auto8.Handlers
     /// </summary>
     public static class ScriptsHandler
     {
+
+
+        /// <summary>
+        /// 随机数方法
+        /// </summary>
+        private static readonly Random random = new ();
+
+        /// <summary>
+        /// 鼠标模拟滑动配置
+        /// </summary>
+        private static readonly MouseMoveConfig[] mouseMoveConfig= new MouseMoveConfig[] {         
+         new MouseMoveConfig(){ Frequency=20, Span=50 },
+         new MouseMoveConfig(){ Frequency=25, Span=40 },
+        };
+
+
+
         private static readonly DmSoft _dm = App._host.Services.GetRequiredService<DmSoft>();
         /// <summary>
         /// 执行步骤
@@ -275,10 +292,18 @@ namespace NZ_Auto8.Handlers
                     //模拟滑动
                     if (step.Mouse.IsSimulatesSliding)
                     {
-                        _dm.SetMouseSpeed(10);
-                        //每移动1坐标所需的延迟
-                        var times = step.Mouse.MoveTimeSpan * 20 / 1000;
-                        var yu = step.Mouse.MoveTimeSpan * 20 % 1000;
+
+                      // var mouseConfig = mouseMoveConfig[random.Next(0, mouseMoveConfig.Length)];
+                        var mouseConfig = mouseMoveConfig[0];
+                        //每移动1坐标所需的延迟，计算出需要移动的次数
+                        var times = step.Mouse.MoveTimeSpan * mouseConfig.Frequency / 1000;
+
+                        //取余数
+                       var yu = step.Mouse.MoveTimeSpan * mouseConfig.Frequency % 1000;
+
+
+            
+
                         if (yu != 0)
                         {
                             times++;
@@ -302,7 +327,7 @@ namespace NZ_Auto8.Handlers
                                 y += everyY;
                                 _dm.MoveR(everyX, everyY);
                             }
-                            Thread.Sleep(50);
+                         Thread.Sleep(mouseConfig.Span);              
                         }
                     }
                     //瞬间移动
@@ -400,11 +425,12 @@ namespace NZ_Auto8.Handlers
         public static int RandomJumpHandler(this Step step)
         {
             var randomJump=step.RandomJump;
+            var max = randomJump.RandomJumpTargets.Count;
             //如果循环次数为0，表示无限循环，直接返回跳转的步数
             if (randomJump.NumberOfCycles == 0)
-            {
-                var random = new Random();
-                var index = random.Next(0, randomJump.RandomJumpTargets.Count);
+            {                
+                var index = random.Next(0, max);
+                Debug.WriteLine($"随机1={index}");
                 return randomJump.RandomJumpTargets[index].TargetIndex;
             }
             else
@@ -415,13 +441,11 @@ namespace NZ_Auto8.Handlers
                     randomJump.CyclesCount = 0;
                     return -1;
                 }
-                else
-                {
-                    randomJump.CyclesCount++;
-                    var random = new Random();
-                    var index = random.Next(0, randomJump.RandomJumpTargets.Count);
-                    return randomJump.RandomJumpTargets[index].TargetIndex;
-                }
+                    randomJump.CyclesCount++;              
+                    var index = random.Next(0, max);
+                Debug.WriteLine($"随机2={index}");
+                return randomJump.RandomJumpTargets[index].TargetIndex;
+         
             }
 
 

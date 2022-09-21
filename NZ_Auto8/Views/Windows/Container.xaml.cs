@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace NZ_Auto8.Views.Windows
     /// <summary>
     /// Container.xaml 的交互逻辑
     /// </summary>
-    public partial class Container 
+    public partial class Container
     {
 
         private readonly IThemeService _themeService;
@@ -30,7 +31,11 @@ namespace NZ_Auto8.Views.Windows
             _themeService = themeService;
             navigationService.SetNavigationControl(RootNavigation);
             SetPageService(pageService);
+
         }
+
+
+
 
 
         //明暗主题切换

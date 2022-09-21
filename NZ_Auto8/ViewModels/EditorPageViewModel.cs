@@ -156,7 +156,7 @@ namespace NZ_Auto8.ViewModels
                     //设置鼠标速度=10
                     _dm.SetMouseSpeed(10);
 
-
+                   
                     //脚本运行
                     for (int i = startIndex; i < Scripts.Count; i++)
                     {
@@ -176,18 +176,7 @@ namespace NZ_Auto8.ViewModels
                         //“步”的执行，此处脚本正式开始运行，接受返回值，result=-1  下一步，result >=0的为跳转                        
                         var result = Scripts[i].Run();
 
-                        //步数跳转
-                        if (result != -1)
-                        {
-                            if (result < Scripts.Count)
-                            {
-                                i = result != 0 ? result - 1 : 0;
-                            }
-                            else
-                            {
-                                throw new Exception($"跳转出错，说跳转的 步数索引{result} 超出列表索引最大数{Scripts.Count}");
-                            }
-                        }
+
 
                         //判断是否设置了停止步
                         if (endIndex != -1 && i == endIndex)
@@ -223,8 +212,24 @@ namespace NZ_Auto8.ViewModels
                             Thread.Sleep(Scripts[i].EndWaitTime);
                         }
 
+                        //步数跳转
+                        if (result != -1)
+                        {
+                            if (result < Scripts.Count )
+                            {
+                              
+                                i = result != 0 ? result - 1 : 0;
+                            }
+                            else
+                            {
+                                throw new Exception($"跳转出错，说跳转的 步数索引{result} 超出列表索引最大数{Scripts.Count}");
+                            }
+                        }
+
                     }
 
+                    //更新界面 显示为停止状态
+                    RunButtonState.SetRunButtonState(false);
                     //脚本运行结束 
                     IsRun = false;
                     //恢复鼠标键盘设置
@@ -287,10 +292,13 @@ namespace NZ_Auto8.ViewModels
             }
             else if (o.ToString() == "insert")
             {
-                //插入到所选位置的前边
-                step.Index = _SelectIndex;
+                if (_SelectIndex>=0)
+                {
+                    //插入到所选位置的前边
+                    step.Index = _SelectIndex;
+                    Scripts.Insert(_SelectIndex, DleteNotNeedProperty(step));
+                }
 
-                Scripts.Insert(_SelectIndex, DleteNotNeedProperty(step));
             }
             else
             {
@@ -337,6 +345,9 @@ namespace NZ_Auto8.ViewModels
 
             foreach (var item in Scripts)
             {
+
+                DleteNotNeedProperty(item);
+                Debug.WriteLine($"{item.Index},{item.Mode}");
 
                 //找图跳转
                 if (item.Mode == EventMode.FindPicture || item.Mode == EventMode.FindPictureClick)
@@ -393,6 +404,7 @@ namespace NZ_Auto8.ViewModels
                     }
 
                 }
+                
 
                 //纯跳转
                 else if (item.Mode == EventMode.Jump)
@@ -416,14 +428,16 @@ namespace NZ_Auto8.ViewModels
                 {
                     //先将跳转标记转换成跳转步数
                     //判断是否为空或者目标少于2个
-                    if (item.RandomJump.TargetTags != null && item.RandomJump.TargetTags.Length > 0 && item.RandomJump.TargetTags.Contains('|'))
-                    {
+                    if (!string.IsNullOrEmpty(item.RandomJump.TargetTags) && item.RandomJump.TargetTags.Contains('|'))
+                    {                   
 
                         var tags = item.RandomJump.TargetTags.Split('|');
+                        item.RandomJump.RandomJumpTargets.Clear();
                         foreach (var tag in tags)
                         {
                             //找出对应标签的序号
                             var tagIndex = list.Find(s => s.JumTargetTag == tag);
+         
                             if (tagIndex != null)
                             {
                                 var target = new RandomJumpTarget() { TargetTag = tag, TargetIndex = tagIndex.Index };
@@ -434,8 +448,7 @@ namespace NZ_Auto8.ViewModels
                                 MessageBox.Show($"第{item.Index}步，随机跳转目标标记 {tag} 无法找到");
                                 return false;
                             }
-                        }
-                        return true;
+                        }                        
                     }
                     else
                     {
@@ -530,6 +543,10 @@ namespace NZ_Auto8.ViewModels
             if (!RestJump())
             {
                 return;
+            }
+            foreach (var script in Scripts)
+            { 
+           
             }
             _fileService.SaveScript(o.ToString()!, Scripts);
         });

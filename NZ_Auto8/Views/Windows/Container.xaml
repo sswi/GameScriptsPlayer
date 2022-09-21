@@ -12,7 +12,7 @@
         WindowCornerPreference="Round"     
         WindowStartupLocation="CenterScreen"     
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"     
-        Title="ABCD" Height="500" Width="880"  Closed="UiWindow_Closed">
+        Title="QWERT" Height="500" Width="880"  Closed="UiWindow_Closed">
 
     <Grid>
         <Grid.RowDefinitions>

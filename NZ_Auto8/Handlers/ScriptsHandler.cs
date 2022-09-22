@@ -296,10 +296,10 @@ namespace NZ_Auto8.Handlers
                       // var mouseConfig = mouseMoveConfig[random.Next(0, mouseMoveConfig.Length)];
                         var mouseConfig = mouseMoveConfig[0];
                         //每移动1坐标所需的延迟，计算出需要移动的次数
-                        var times = step.Mouse.MoveTimeSpan * mouseConfig.Frequency / 1000;
+                        var times = step.Mouse.MoveTimeSpan * 20 / 1000;
 
                         //取余数
-                       var yu = step.Mouse.MoveTimeSpan * mouseConfig.Frequency % 1000;
+                       var yu = step.Mouse.MoveTimeSpan * 20 % 1000;
 
 
             
@@ -327,7 +327,7 @@ namespace NZ_Auto8.Handlers
                                 y += everyY;
                                 _dm.MoveR(everyX, everyY);
                             }
-                         Thread.Sleep(mouseConfig.Span);              
+                         Thread.Sleep(50);              
                         }
                     }
                     //瞬间移动

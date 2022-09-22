@@ -18,7 +18,7 @@ namespace NZ_Auto8.Models
     {
         public ObservableCollection<RandomJumpTarget> RandomJumpTargets { get; set; } = new ();
 
-        private int numberOfCycles = 1;
+        private int numberOfCycles = 0;
         /// <summary>
         /// 循环次数，0表示无限循环
         /// </summary>

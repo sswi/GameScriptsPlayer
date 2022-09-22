@@ -13,7 +13,7 @@
 
         <TextBlock  Text="跳转目标标记：(最少2个标记，用|隔开)"  VerticalAlignment="Center"/>
         <ui:TextBox Grid.Row="1"  Icon="Target16" Text="{Binding RandomJump.TargetTags,Mode=TwoWay}"  Cursor="IBeam" PlaceholderText="如：打怪|喝药|回城" Margin="0,5,0,15"/>
-        <TextBlock Text="循环次数 (0=无限循环):" VerticalAlignment="Center" />
+        <!--<TextBlock Text="循环次数 (0=无限循环):" VerticalAlignment="Center"   />-->
         <ui:NumberBox Grid.Column="1" IntegersOnly="True" Min="0" Step="1"   Text="{Binding RandomJump.NumberOfCycles,Mode=TwoWay}"   Cursor="IBeam" Margin="0,5,0,10" />
 
 

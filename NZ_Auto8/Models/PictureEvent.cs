@@ -89,7 +89,15 @@ namespace NZ_Auto8.Models
         public string NofFoundTargetTag
         {
             get { return nofFoundTargetTag; }
-            set { nofFoundTargetTag = value; OnPropertyChanged(); }
+            set 
+            {
+                nofFoundTargetTag = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    NotFoundJumToIndex = -1;
+                }
+                OnPropertyChanged(); 
+            }
         }
 
 
@@ -112,7 +120,15 @@ namespace NZ_Auto8.Models
         public string HasFoundTargetTag
         {
             get { return hasFoundTargetTag; }
-            set { hasFoundTargetTag = value; OnPropertyChanged(); }
+            set
+            { 
+                hasFoundTargetTag = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    HasFoundJumToIndex = -1;
+                }
+                OnPropertyChanged(); 
+            }
         }
     }
 }

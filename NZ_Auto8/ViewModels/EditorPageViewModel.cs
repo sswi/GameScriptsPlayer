@@ -350,7 +350,6 @@ namespace NZ_Auto8.ViewModels
                 //找图跳转
                 if (item.Mode == EventMode.FindPicture || item.Mode == EventMode.FindPictureClick)
                 {
-
                     var s = list.FindLast(s => item.Picture.NofFoundTargetTag != null && s.JumTargetTag == item.Picture.NofFoundTargetTag);
                     if (s != null)
                     {
@@ -361,25 +360,32 @@ namespace NZ_Auto8.ViewModels
                         MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，未找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
                         return false;
                     }
-
-                    s = list.FindLast(s => item.Picture.HasFoundTargetTag != null && s.JumTargetTag == item.Picture.HasFoundTargetTag);
+                    s = list.FindLast(s => !string.IsNullOrEmpty(item.Picture.HasFoundTargetTag) && s.JumTargetTag == item.Picture.HasFoundTargetTag);
                     if (s != null)
                     {
                         item.Picture.HasFoundJumToIndex = s.Index;
                     }
-                    else if (item.Picture.HasFoundTargetTag != null && item.Picture.HasFoundTargetTag.Length > 0)
+                    else if (!string.IsNullOrEmpty(item.Picture.HasFoundTargetTag)  )
                     {
                         MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
                         return false;
                     }
+
+                    //把空指向标记清除
+                    if(string.IsNullOrEmpty(item.Picture.HasFoundTargetTag))
+                    { 
+                        item.Picture.HasFoundJumToIndex=-1;
+                    }
+                    if (string.IsNullOrEmpty(item.Picture.NofFoundTargetTag))
+	                {
+                        item.Picture.NotFoundJumToIndex=-1;
+	                }
 
                 }
 
                 //找色跳转
                 else if (item.Mode == EventMode.FindColor)
                 {
-
-
                     var s = list.FindLast(s => item.Color.NofFoundTargetTag != null && s.JumTargetTag == item.Color.NofFoundTargetTag);
                     if (s != null)
                     {
@@ -400,6 +406,16 @@ namespace NZ_Auto8.ViewModels
                         MessageBox.Show($"脚本初始化失败，第 {item.Index} 步，找到跳转目标标签： {item.JumTargetTag}  不存在，请重新确认");
                         return false;
                     }
+
+                    //把空指向标记清除
+                    if(string.IsNullOrEmpty(item.Color.HasFoundTargetTag))
+                    { 
+                        item.Color.HasFoundJumToIndex=-1;
+                    }
+                    if (string.IsNullOrEmpty(item.Color.NofFoundTargetTag))
+	                {
+                        item.Color.NotFoundJumToIndex=-1;
+	                }
 
                 }
                 
@@ -454,9 +470,6 @@ namespace NZ_Auto8.ViewModels
                         return false;
                     }
                 }
-
-
-
             }
             return true;
         }
@@ -473,7 +486,6 @@ namespace NZ_Auto8.ViewModels
             {
                 Scripts[i].Index = i;
             }
-
         }
 
 

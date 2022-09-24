@@ -371,15 +371,7 @@ namespace NZ_Auto8.ViewModels
                         return false;
                     }
 
-                    //把空指向标记清除
-                    if(string.IsNullOrEmpty(item.Picture.HasFoundTargetTag))
-                    { 
-                        item.Picture.HasFoundJumToIndex=-1;
-                    }
-                    if (string.IsNullOrEmpty(item.Picture.NofFoundTargetTag))
-	                {
-                        item.Picture.NotFoundJumToIndex=-1;
-	                }
+
 
                 }
 
@@ -407,15 +399,7 @@ namespace NZ_Auto8.ViewModels
                         return false;
                     }
 
-                    //把空指向标记清除
-                    if(string.IsNullOrEmpty(item.Color.HasFoundTargetTag))
-                    { 
-                        item.Color.HasFoundJumToIndex=-1;
-                    }
-                    if (string.IsNullOrEmpty(item.Color.NofFoundTargetTag))
-	                {
-                        item.Color.NotFoundJumToIndex=-1;
-	                }
+
 
                 }
                 

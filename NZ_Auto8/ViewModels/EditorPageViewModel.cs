@@ -211,8 +211,12 @@ namespace NZ_Auto8.ViewModels
                         }
 
                         //步数跳转
-                        if (result != -1)
+                        if ( result != -1)
                         {
+                            if (!IsRun)
+	                        {
+                                break;
+	                        }
                             if (result < Scripts.Count )
                             {
                               
@@ -236,7 +240,6 @@ namespace NZ_Auto8.ViewModels
                 //开始线程
                 thread.Start();
             }
-
             //脚本到此运行结束
             //恢复鼠标键盘设置
             RestMouseAndKeyConfig();

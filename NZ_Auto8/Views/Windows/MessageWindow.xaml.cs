@@ -25,9 +25,17 @@ namespace NZ_Auto8.Views.Windows
         public MessageWindow()
         {
             InitializeComponent();
-            listView.ItemsSource = Messages;            
+            listView.ItemsSource = Messages;
+        //    Messages.CollectionChanged += Messages_CollectionChanged;
         }
 
+        //private void Messages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (e.NewItems.Count>=1000)
+        //    {
+        //        Messages.Clear();
+        //    }
+        //}
 
         public ObservableCollection<string> Messages { get; set; }=new ObservableCollection<string>(){ };
 

@@ -91,8 +91,13 @@ namespace NZ_Auto8.Models
         /// </summary>
         RightDoubleClick = 7,
         /// <summary>
-        /// 鼠标移动
+        /// 鼠标移动 相对坐标
         /// </summary>
-        Move = 8
+        Move = 8,
+        /// <summary>
+        /// 鼠标移动 绝对坐标
+        /// </summary>
+        MoveTo=9,
+
     }
 }

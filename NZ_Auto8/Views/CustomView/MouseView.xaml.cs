@@ -23,7 +23,7 @@ namespace NZ_Auto8.Views.CustomView
         public MouseView()
         {
             InitializeComponent();
-            comboBox.ItemsSource = new string[9]{ "左键按下", "左键弹起", "左键单击", "左键双击", "右键按下", "右键弹起", "右键单击", "右键双击", "移动鼠标" };
+            comboBox.ItemsSource = new string[10]{ "左键按下", "左键弹起", "左键单击", "左键双击", "右键按下", "右键弹起", "右键单击", "右键双击", "移动鼠标(相对)","移动鼠标(绝对)" };
         }
     }
 }

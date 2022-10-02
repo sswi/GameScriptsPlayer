@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
+
 namespace NZ_Auto8.Handlers
 {
 
@@ -105,6 +106,8 @@ namespace NZ_Auto8.Handlers
                         {
                             //执行光鸡命令
                             Process.Start("C:/Windows/System32/shutdown.exe", "-s -t 0 ");
+                            Thread.Sleep(2000);
+                          System.Windows. Application.Current.Shutdown();
                         }
                         catch 
                         {                          
@@ -336,6 +339,11 @@ namespace NZ_Auto8.Handlers
                         
                         _dm.MoveR(step.Mouse.Postion.X, step.Mouse.Postion.Y);
                     }
+                    break;
+
+                    //鼠标移动 绝对坐标
+                case MouseMode.MoveTo:
+                    _dm.MoveTo(step.Mouse.Postion.X, step.Mouse.Postion.Y);
                     break;
             }            
         }

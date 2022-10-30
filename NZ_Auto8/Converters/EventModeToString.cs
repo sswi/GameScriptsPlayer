@@ -29,6 +29,7 @@ namespace NZ_Auto8.Converters
                 EventMode.ShutDown => "关机",
                 EventMode.KillApp => "结束进程",
                 EventMode.RandomJump => "随机跳转",
+                EventMode.MultiTask => "多线程",
                 _ => "未知步骤",
             };
         }

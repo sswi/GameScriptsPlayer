@@ -40,18 +40,28 @@
                         Icon="Home24"
                         PageTag="home" Cursor="Hand"
                          />
+					
                     <ui:NavigationItem
                         Content="执行器"
                         Icon="Fluent24"
                         PageType="{x:Type pages:PlayerPage}" 
                         PageTag="player"
                        Cursor="Hand" />
+					
                     <ui:NavigationItem
                         Content="编辑器"
                         Icon="Note16"
                         PageTag="editor"
                          PageType="{x:Type pages:EditorPage}" 
                         Cursor="Hand"/>
+
+					<ui:NavigationItem
+	                    Content="编辑器2"
+	                    Icon="Note16"
+	                    PageTag="editor2"
+	                     PageType="{x:Type pages:NewEditorPage}"
+	                    Cursor="Hand"/>
+					
                     <ui:NavigationItem
                         Content="工具"
                         Icon="Diversity24"

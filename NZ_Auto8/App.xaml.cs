@@ -56,6 +56,10 @@ namespace NZ_Auto8
             services.AddScoped<EditorPage>();
             services.AddScoped<EditorPageViewModel>();
 
+            services.AddScoped<NewEditorPage>();
+            services.AddScoped<NewEditorPageViewModel>();
+
+
             services.AddScoped<PlayerPage>();
             services.AddScoped<PlayerPageViewModel>();
 

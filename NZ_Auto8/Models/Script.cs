@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,20 +52,25 @@ namespace NZ_Auto8.Models
 
 
 
-        private List<Step> steps=null! ;
-        /// <summary>
-        /// 脚本步列表
-        /// </summary>
-        public List<Step> Steps  
+
+        private ObservableCollection<ScriptTask>  scripts=null!;
+        public ObservableCollection<ScriptTask> Scripts
         {
-            get { return steps; }
-            set
+            get { return scripts; }
+            set 
             { 
-                steps = value;
-                StepsCount = steps!=null?steps.Count:0;
-                OnPropertyChanged(); 
+                scripts = value;
+                if (value!=null)
+                {
+                    foreach (var v in value )
+                    {
+                        StepsCount += v.Steps.Count;
+                    }
+                }
             }
         }
+
+
 
 
 

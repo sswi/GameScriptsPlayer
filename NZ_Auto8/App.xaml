@@ -23,6 +23,7 @@
             <converter:EventModeToString x:Key="EventModeToString"/>
             <converter:BoolToVisibility x:Key="BoolToVisibility"/>
             <converter:StringLenghtToVisibility x:Key="StringLenghtToVisibility"/>
+            <converter:IntToMultiTaskMode x:Key="IntToMultiTaskMode"/>
             
 
             <Style TargetType="Border" x:Key="XBorderStyle">

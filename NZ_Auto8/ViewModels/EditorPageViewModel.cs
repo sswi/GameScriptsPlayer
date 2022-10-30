@@ -541,7 +541,6 @@ namespace NZ_Auto8.ViewModels
             {
                 return;
             }
-
             
             _fileService.SaveScript(o.ToString()!, Scripts);
         });

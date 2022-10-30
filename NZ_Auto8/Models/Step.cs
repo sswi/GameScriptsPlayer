@@ -207,6 +207,25 @@ namespace NZ_Auto8.Models
 
 
 
+
+
+        private MultiTaskEvent task=new ();
+        /// <summary>
+        /// 多线程
+        /// </summary>
+        public MultiTaskEvent Task
+        {
+            get { return task; }
+            set { task = value;OnPropertyChanged(); }
+        }
+
+
+
+
+
+
+
+        //
     }
 
 
@@ -274,5 +293,9 @@ namespace NZ_Auto8.Models
         /// 随机跳转
         /// </summary>
         RandomJump=12,
+        /// <summary>
+        /// 多线程任务
+        /// </summary>
+        MultiTask=13,
     }
 }

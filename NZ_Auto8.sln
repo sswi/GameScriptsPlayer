@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NZ_Auto8", "NZ_Auto8\NZ_Auto8.csproj", "{6241F911-B555-4856-A272-278433932E87}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6328CF75-6EDF-4D39-96D6-BDED9A533878}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScriptsPlayer", "GameScriptsPlayer\GameScriptsPlayer.csproj", "{5455526D-1845-4D12-8E67-CB85D158A58A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScriptsPlayer.Core", "GameScriptsPlayer.Core\GameScriptsPlayer.Core.csproj", "{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +17,29 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6241F911-B555-4856-A272-278433932E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6241F911-B555-4856-A272-278433932E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6241F911-B555-4856-A272-278433932E87}.Debug|x86.ActiveCfg = Debug|x86
-		{6241F911-B555-4856-A272-278433932E87}.Debug|x86.Build.0 = Debug|x86
-		{6241F911-B555-4856-A272-278433932E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6241F911-B555-4856-A272-278433932E87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6241F911-B555-4856-A272-278433932E87}.Release|x86.ActiveCfg = Release|x86
-		{6241F911-B555-4856-A272-278433932E87}.Release|x86.Build.0 = Release|x86
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5455526D-1845-4D12-8E67-CB85D158A58A}.Release|x86.Build.0 = Release|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Debug|x86.Build.0 = Debug|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|x86.ActiveCfg = Release|Any CPU
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5455526D-1845-4D12-8E67-CB85D158A58A} = {6328CF75-6EDF-4D39-96D6-BDED9A533878}
+		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D} = {6328CF75-6EDF-4D39-96D6-BDED9A533878}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D61A7277-7B57-4CCE-A97C-942AE16AE10B}

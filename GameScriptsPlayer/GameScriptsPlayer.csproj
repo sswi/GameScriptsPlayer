@@ -1,11 +1,39 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
+	  <RootNamespace>GameScriptsPlayer</RootNamespace>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>wpfui.ico</ApplicationIcon>
+    <AssemblyName>GSPlayer</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RazorPages\**" />
+    <Content Remove="RazorPages\**" />
+    <EmbeddedResource Remove="RazorPages\**" />
+    <None Remove="RazorPages\**" />
+    <Page Remove="RazorPages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wpfui.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wpfui.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.6" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameScriptsPlayer.Rzors\GameScriptsPlayer.Razors.csproj" />
+  </ItemGroup>
 
 </Project>

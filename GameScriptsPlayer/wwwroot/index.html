@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>脚本执行器</title>
+    <base href="/" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="GameScriptsPlayer.styles.css" rel="stylesheet" />
+    <link href="_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css" rel="stylesheet" />
+
+</head>
+
+
+<body>
+
+    <!--<div class="status-bar-safe-area"></div>-->
+    <div id="app">正在载入...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script app-name="GSPlayer" src="./_content/Microsoft.FluentUI.AspNetCore.Components/js/initializersLoader.webview.js"></script>
+    <script src="_framework/blazor.webview.js"></script>
+   
+</body>
+
+</html>

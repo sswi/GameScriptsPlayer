@@ -1,0 +1,100 @@
+﻿:root {
+    --error: #c43c39;
+    --warning: #ff4d0b;
+    --accent-fill-rest: #5e5cbd;
+    --primary-color: #5e5cbd;
+    --success: #55a64a;
+}
+
+@font-face {
+    font-family: Xicon;
+    src: url(../fonts/Lo.otf);
+}
+
+html, body,#app {
+    font-family: 'Segoe UI','Microsoft YaHei UI','Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;   
+}
+
+* {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+div::-webkit-scrollbar {
+    cursor: pointer;
+    width: 8px;
+    height: 8px;
+}
+/**
+    定义滚动条轨道
+*/
+div::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: rgba(189, 189, 189, 0.2);
+}
+
+/**
+    滑块
+*/
+div::-webkit-scrollbar-thumb {
+    background-color: rgb(165, 165, 165,0.5);
+    border-radius: 4px;
+}
+
+    div::-webkit-scrollbar-thumb:hover {
+        background: #5e5cbd;
+    }
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #0071c1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

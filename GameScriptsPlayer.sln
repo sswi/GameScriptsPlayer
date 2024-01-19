@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6328CF75-6EDF-4D39-96D6-BDED9A533878}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameScriptsPlayer", "GameScriptsPlayer\GameScriptsPlayer.csproj", "{5455526D-1845-4D12-8E67-CB85D158A58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScriptsPlayer", "GameScriptsPlayer\GameScriptsPlayer.csproj", "{5455526D-1845-4D12-8E67-CB85D158A58A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameScriptsPlayer.Core", "GameScriptsPlayer.Core\GameScriptsPlayer.Core.csproj", "{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScriptsPlayer.Core", "GameScriptsPlayer.Core\GameScriptsPlayer.Core.csproj", "{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScriptsPlayer.Razors", "GameScriptsPlayer.Rzors\GameScriptsPlayer.Razors.csproj", "{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,13 +33,17 @@ Global
 		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|x86.ActiveCfg = Release|Any CPU
 		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D}.Release|x86.Build.0 = Release|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Debug|x86.Build.0 = Debug|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Release|x86.ActiveCfg = Release|Any CPU
+		{9621B91B-E1B1-4C44-BDFB-BF859C5C0445}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5455526D-1845-4D12-8E67-CB85D158A58A} = {6328CF75-6EDF-4D39-96D6-BDED9A533878}
-		{15DE0E13-E18E-4F7A-8D88-0F7E5428167D} = {6328CF75-6EDF-4D39-96D6-BDED9A533878}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D61A7277-7B57-4CCE-A97C-942AE16AE10B}
